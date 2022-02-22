@@ -1,0 +1,9 @@
+{
+  "tabs": {
+    "Home": 0,
+    "Companies": 1,
+    "Account": 2,
+    "Points": 3
+  },
+  "apiUrl": "https://localhost:4004/api"
+}
