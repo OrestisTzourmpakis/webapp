@@ -207,7 +207,7 @@ function MainPage() {
                 onClick={() => handleListClick(config.tabs.Companies)}
               >
                 <ListItemIcon>
-                  <Inbox />
+                  <Business />
                 </ListItemIcon>
                 <ListItemText
                   className={clsx({

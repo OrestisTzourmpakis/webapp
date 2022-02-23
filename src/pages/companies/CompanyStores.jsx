@@ -13,6 +13,7 @@ import {
 import PageHeader from "../../components/PageHeader";
 import CardItem from "../../components/CardItem";
 import { useNavigate } from "react-router-dom";
+import GoogleMapContainer from "../../components/GoogleMap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +32,8 @@ function CompanyStores() {
   }, []);
   return (
     <>
-      <Grid container>
+      <GoogleMapContainer />
+      {/* <Grid container>
         <Grid xs={12}>
           <Container maxWidth="md">
             <List>
@@ -65,7 +67,7 @@ function CompanyStores() {
             </List>
           </Container>
         </Grid>
-      </Grid>
+      </Grid> */}
     </>
   );
 }

@@ -16,6 +16,9 @@ import CardItem from "../../components/CardItem";
 import { useNavigate } from "react-router-dom";
 import SaleCardItem from "../../components/SaleCardItem";
 import CustomDialog from "../../components/CustomDialog";
+import { SignalCellularNoSimSharp } from "@material-ui/icons";
+import OffersList from "../../components/OffersList";
+import { salesData } from "../../services/dummyData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,97 +31,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CompanySales() {
-  const [dialogConfig, setDialogConfig] = useState({
-    open: false,
-    title: "",
-    description: "",
-  });
+  const [sales, setSales] = useState([]);
   useEffect(() => {
-    console.log("Company Sales");
+    const Init = async () => {
+      try {
+        const data = salesData();
+        setSales(data);
+      } catch (ex) {}
+    };
+    Init();
   }, []);
-  const classes = useStyles();
-  const handleListClick = (title, description) => {
-    setDialogConfig({ ...dialogConfig, title, description, open: true });
-  };
-
-  const descTest =
-    "Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus \
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur et.\
-  Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor \
-  auctor.";
-
-  const handleClose = () => {
-    setDialogConfig({ ...dialogConfig, open: false });
-  };
 
   return (
     <>
       <Grid container>
         <Grid xs={12}>
-          <Container maxWidth="md">
-            <List>
-              <ListItem
-                onClick={() => handleListClick("Title", "Description")}
-                classes={{ root: classes.root }}
-              >
-                <SaleCardItem />
-              </ListItem>
-              <ListItem
-                onClick={() => handleListClick("Titddddle", descTest)}
-                classes={{ root: classes.root }}
-              >
-                <CardItem />
-              </ListItem>
-              <ListItem classes={{ root: classes.root }}>
-                <CardItem />
-              </ListItem>
-              <ListItem classes={{ root: classes.root }}>
-                <CardItem />
-              </ListItem>
-              <ListItem classes={{ root: classes.root }}>
-                <CardItem />
-              </ListItem>
-              <ListItem classes={{ root: classes.root }}>
-                <CardItem />
-              </ListItem>
-              <ListItem classes={{ root: classes.root }}>
-                <CardItem />
-              </ListItem>
-              <ListItem classes={{ root: classes.root }}>
-                <CardItem />
-              </ListItem>
-              <ListItem classes={{ root: classes.root }}>
-                <CardItem />
-              </ListItem>
-            </List>
-          </Container>
+          <OffersList sales={sales} />
         </Grid>
       </Grid>
-      <CustomDialog
-        open={dialogConfig.open}
-        onClose={handleClose}
-        title={dialogConfig.title}
-        description={dialogConfig.description}
-      />
     </>
   );
 }

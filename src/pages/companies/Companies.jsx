@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { Business } from "@material-ui/icons";
 import { getAllCompanies } from "../../services/companyService";
 import SearchBar from "../../components/SearchBar";
+import { companiesData } from "../../services/dummyData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +40,8 @@ function Companies() {
     changeTab(config.tabs.Companies);
     const Init = async () => {
       try {
-        const { data } = await getAllCompanies();
+        //const { data } = await getAllCompanies();
+        const data = companiesData();
         setCompanies(data);
         console.log(data);
       } catch (ex) {
@@ -51,20 +53,20 @@ function Companies() {
   return (
     <>
       <Container style={{ paddingTop: "50px" }}>
-        <PageHeader title="Companies" subTitle="List of companies">
-          <Business fontSize="large" />
-        </PageHeader>
         <Grid container>
           <Grid item xs={12}>
             <Container maxWidth="md">
               <Grid item container direction="column">
+                <PageHeader title="Companies" subTitle="List of companies">
+                  <Business fontSize="large" />
+                </PageHeader>
                 <SearchBar />
                 <List>
-                  {companies.map((company, index) => (
+                  {companies.map((company) => (
                     <ListItem
-                      key={index}
+                      key={company.id}
                       onClick={() => {
-                        navigate(`/companies/${index}`);
+                        navigate(`/companies/${company.id}`);
                       }}
                       classes={{ root: classes.root }}
                     >

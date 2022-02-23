@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   panel: {
-    padding: "20px",
+    paddingTop: "20px",
   },
 }));
 
@@ -73,13 +73,13 @@ function CompanyDetails() {
   return (
     <>
       <Container style={{ paddingTop: "50px" }}>
-        <PageHeader title="Company name" subTitle="Company info">
-          <Business fontSize="large" />
-        </PageHeader>
         <Grid container>
           <Grid item xs>
             <Container>
               <div className={classes.root}>
+                <PageHeader title="Company name" subTitle="Company info">
+                  <Business fontSize="large" />
+                </PageHeader>
                 <AppBar position="static" color="default">
                   <Tabs
                     value={value}
