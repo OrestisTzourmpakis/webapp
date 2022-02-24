@@ -4,7 +4,8 @@
     "Companies": 1,
     "Offers":2,
     "Points": 3,
-    "Info":4
+    "Info":4,
+    "Account":5
   },
   "apiUrl": "https://localhost:4004/api"
 }

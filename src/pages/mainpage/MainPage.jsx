@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   drawerActiveText: {
-    color: "white",
+    color: theme.custom.drawer.backgroundColor,
   },
   listTextColorActive: {
     color: theme.custom.drawer.backgroundColor,
@@ -135,11 +135,9 @@ function MainPage() {
   const { tab, changeTab } = useContext(TabContext);
   const [hideText, setHideText] = useState(true);
   const navigate = useNavigate();
-  const [menuIconsStyle, setMenuIconsStyle] = useState({
-    home: false,
-    Inbox: false,
-    account: false,
-  });
+  const [homeActive, setHomeActive] = useState(false);
+  const [companiesActive, setCompaniesActive] = useState(false);
+  const [accountActive, setAccountActive] = useState(false);
   const handleListClick = (tab) => {
     switch (tab) {
       case config.tabs.Home:
@@ -156,14 +154,13 @@ function MainPage() {
         break;
     }
   };
-  const homeIconStyles = clsx();
+  const homeIconStyles = clsx({});
   return (
     <>
       <Grid container>
         <Grid item>
           <Drawer
             onMouseEnter={(e) => {
-              console.log("entered");
               setHideText(false);
             }}
             onMouseLeave={(e) => setHideText(true)}
@@ -173,20 +170,25 @@ function MainPage() {
             elevation={0}
             PaperProps={{ sx: { width: "40%" } }}
           >
-            <Box className={classes.logo}>
+            <Box className={classes.logo} display="flex" flexDirection="column">
               <img
                 height="70"
                 width="70"
                 src={process.env.PUBLIC_URL + "/logo.png"}
               />
+              <Divider style={{ backgroundColor: "white" }} />
             </Box>
             <List className={classes.listClasses}>
               <ListItemCustom
+                key="home"
                 button
                 onClick={() => handleListClick(config.tabs.Home)}
                 alignItems="center"
                 selected={tab === config.tabs.Home}
-                onMouseEnter={() => {}}
+                onMouseEnter={() => setHomeActive(true)}
+                onMouseLeave={() => {
+                  setHomeActive(false);
+                }}
               >
                 <ListItemIcon>
                   <Home />
@@ -194,17 +196,23 @@ function MainPage() {
                 <ListItemText
                   className={clsx({
                     [classes.hideText]: hideText,
-                    [classes.drawerText]: true,
+                    [classes.drawerActiveText]:
+                      homeActive || tab === config.tabs.Home,
+                    [classes.drawerText]:
+                      !homeActive && tab !== config.tabs.Home,
                   })}
                 >
                   <Typography variant="body1">Home</Typography>
                 </ListItemText>
               </ListItemCustom>
               <ListItemCustom
+                key="companies"
                 button
                 selected={tab === config.tabs.Companies}
                 alignItems="center"
                 onClick={() => handleListClick(config.tabs.Companies)}
+                onMouseEnter={() => setCompaniesActive(true)}
+                onMouseLeave={() => setCompaniesActive(false)}
               >
                 <ListItemIcon>
                   <Business />
@@ -212,17 +220,23 @@ function MainPage() {
                 <ListItemText
                   className={clsx({
                     [classes.hideText]: hideText,
-                    [classes.drawerText]: true,
+                    [classes.drawerActiveText]:
+                      companiesActive || tab === config.tabs.Companies,
+                    [classes.drawerText]:
+                      !companiesActive && tab !== config.tabs.Companies,
                   })}
                 >
                   <Typography variant="body1">Companies</Typography>
                 </ListItemText>
               </ListItemCustom>
               <ListItemCustom
+                key="account"
                 button
                 alignItems="center"
                 onClick={() => handleListClick(config.tabs.Account)}
                 selected={tab === config.tabs.Account}
+                onMouseEnter={() => setAccountActive(true)}
+                onMouseLeave={() => setAccountActive(false)}
               >
                 <ListItemIcon>
                   <Person />
@@ -230,7 +244,10 @@ function MainPage() {
                 <ListItemText
                   className={clsx({
                     [classes.hideText]: hideText,
-                    [classes.drawerText]: true,
+                    [classes.drawerActiveText]:
+                      accountActive || tab === config.tabs.Account,
+                    [classes.drawerText]:
+                      !accountActive && tab !== config.tabs.Account,
                   })}
                 >
                   <Typography variant="body1">Account</Typography>

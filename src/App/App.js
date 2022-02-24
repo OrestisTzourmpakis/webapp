@@ -4,6 +4,7 @@ import MainPage from '../pages/mainpage/MainPage';
 import { TabContextProvider } from '../contexts/TabContext';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from '../pages/login/Login';
+import RegisterPage from '../pages/register/RegisterPage';
 
 
 const theme = createTheme({
@@ -33,6 +34,8 @@ function App() {
       <Router>
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<RegisterPage />} />
+
             <Route path="/*" element={
               <TabContextProvider>
                 <MainPage/>
