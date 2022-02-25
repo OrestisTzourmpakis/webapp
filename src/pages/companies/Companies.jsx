@@ -6,6 +6,7 @@ import {
   Box,
   Card,
   Container,
+  Divider,
   Grid,
   List,
   ListItem,
@@ -18,6 +19,8 @@ import { Business } from "@material-ui/icons";
 import { getAllCompanies } from "../../services/companyService";
 import SearchBar from "../../components/SearchBar";
 import { companiesData } from "../../services/dummyData";
+import Pagination from "@material-ui/lab/Pagination";
+import ListWithPagination from "../../components/ListWithPagination";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +38,30 @@ function Companies() {
   const classes = useStyles();
   const { changeTab } = useContext(TabContext);
   const [companies, setCompanies] = useState([]);
+  const itemPerPage = 3;
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
+
+  const handleChange = (event, value) => setPage(value);
+
+  const listBody = (company) => (
+    <ListItem
+      key={company.id}
+      onClick={() => {
+        navigate(`/companies/${company.id}`);
+      }}
+      classes={{ root: classes.root }}
+    >
+      <CardItem
+        name={company.name}
+        logo={company.logo}
+        companySalesCount={company.companySalesCount}
+        companyUsersCount={company.companyUsersCount}
+        companyStoresCount={company.companyStoresCount}
+      />
+    </ListItem>
+  );
+
   useEffect(() => {
     changeTab(config.tabs.Companies);
     const Init = async () => {
@@ -56,31 +82,56 @@ function Companies() {
         <Grid container>
           <Grid item xs={12}>
             <Container maxWidth="md">
-              <Grid item container direction="column">
+              <Box
+                display="flex"
+                flexDirection="column"
+                style={{ marginBottom: "50px" }}
+              >
+                <PageHeader title="Companies" subTitle="List of companies">
+                  <Business fontSize="large" />
+                </PageHeader>
+                <ListWithPagination data={companies} listItem={listBody} />
+              </Box>
+              {/* <Grid item container direction="column">
                 <PageHeader title="Companies" subTitle="List of companies">
                   <Business fontSize="large" />
                 </PageHeader>
                 <SearchBar />
                 <List>
-                  {companies.map((company) => (
-                    <ListItem
-                      key={company.id}
-                      onClick={() => {
-                        navigate(`/companies/${company.id}`);
-                      }}
-                      classes={{ root: classes.root }}
-                    >
-                      <CardItem
-                        name={company.name}
-                        logo={company.logo}
-                        companySalesCount={company.companySalesCount}
-                        companyUsersCount={company.companyUsersCount}
-                        companyStoresCount={company.companyStoresCount}
-                      />
-                    </ListItem>
-                  ))}
+                  {companies
+                    .slice((page - 1) * itemPerPage, page * itemPerPage)
+                    .map((company) => (
+                      <ListItem
+                        key={company.id}
+                        onClick={() => {
+                          navigate(`/companies/${company.id}`);
+                        }}
+                        classes={{ root: classes.root }}
+                      >
+                        <CardItem
+                          name={company.name}
+                          logo={company.logo}
+                          companySalesCount={company.companySalesCount}
+                          companyUsersCount={company.companyUsersCount}
+                          companyStoresCount={company.companyStoresCount}
+                        />
+                      </ListItem>
+                    ))}
                 </List>
-              </Grid>
+                <Divider />
+                <Box display="flex" justifyContent="center">
+                  <Pagination
+                    count={Math.ceil(companies.length / itemPerPage)}
+                    page={page}
+                    onChange={handleChange}
+                    defaultPage={1}
+                    color="primary"
+                    size="large"
+                    showFirstButton
+                    showLastButton
+                  />
+                </Box>
+              </Grid> */}
             </Container>
           </Grid>
         </Grid>
