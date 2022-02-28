@@ -12,8 +12,17 @@ import {
   Container,
 } from "@material-ui/core";
 import HomePage from "../home/Home";
-import { Inbox, Mail, Home, Business, Person } from "@material-ui/icons";
-import React from "react";
+import {
+  Inbox,
+  Mail,
+  Home,
+  Business,
+  Person,
+  Loyalty,
+  MonetizationOn,
+  Info,
+} from "@material-ui/icons";
+import React, { useEffect } from "react";
 import { createRoutes } from "../../routes";
 import config from "../../config.json";
 import { useContext, useState } from "react";
@@ -31,6 +40,8 @@ import {
 } from "react-router-dom";
 import Points from "../points/Points";
 import clsx from "clsx";
+import { UserContext } from "../../contexts/UserContext";
+import { authenticateUser } from "../../services/userService";
 const drawerWidth = "auto";
 const appBarHeight = 70;
 
@@ -138,6 +149,12 @@ function MainPage() {
   const [homeActive, setHomeActive] = useState(false);
   const [companiesActive, setCompaniesActive] = useState(false);
   const [accountActive, setAccountActive] = useState(false);
+  const [pointsActive, setPointsActive] = useState(false);
+  const [infoActive, setInfoActive] = useState(false);
+  const [offersActive, setOffersActive] = useState(false);
+
+  const { authed, userDetailObject, setUserContextObject } =
+    useContext(UserContext);
   const handleListClick = (tab) => {
     switch (tab) {
       case config.tabs.Home:
@@ -152,9 +169,43 @@ function MainPage() {
       case config.tabs.Account:
         navigate("/account");
         break;
+      case config.tabs.Offers:
+        navigate("/offers");
+        break;
+      case config.tabs.Points:
+        navigate("/points");
+        break;
+      case config.tabs.Info:
+        navigate("/info");
+        break;
     }
   };
   const homeIconStyles = clsx({});
+
+  useEffect(() => {
+    const Init = async () => {
+      //console.log("Main Page called");
+      // call the server to get the data and save the user after that!!
+      console.log("Inside the main page useeffect");
+      if (authed.email === "") {
+        console.log("Authed email does not exists get it!!!");
+        try {
+          const response = await authenticateUser();
+          const obj = userDetailObject(response);
+          console.log("To response apo to authenticate user!!!", response);
+          setUserContextObject(obj);
+          return;
+        } catch (ex) {
+          console.log("error");
+          console.log("Error sto authenticate user:", ex);
+          navigate("/login");
+        }
+      }
+      //navigate("/login");
+    };
+    Init();
+  }, []);
+
   return (
     <>
       <Grid container>
@@ -229,28 +280,79 @@ function MainPage() {
                   <Typography variant="body1">Companies</Typography>
                 </ListItemText>
               </ListItemCustom>
+
               <ListItemCustom
-                key="account"
+                key="offers"
                 button
                 alignItems="center"
-                onClick={() => handleListClick(config.tabs.Account)}
-                selected={tab === config.tabs.Account}
-                onMouseEnter={() => setAccountActive(true)}
-                onMouseLeave={() => setAccountActive(false)}
+                onClick={() => handleListClick(config.tabs.Offers)}
+                selected={tab === config.tabs.Offers}
+                onMouseEnter={() => setOffersActive(true)}
+                onMouseLeave={() => setOffersActive(false)}
               >
                 <ListItemIcon>
-                  <Person />
+                  <Loyalty />
                 </ListItemIcon>
                 <ListItemText
                   className={clsx({
                     [classes.hideText]: hideText,
                     [classes.drawerActiveText]:
-                      accountActive || tab === config.tabs.Account,
+                      offersActive || tab === config.tabs.Offers,
                     [classes.drawerText]:
-                      !accountActive && tab !== config.tabs.Account,
+                      !offersActive && tab !== config.tabs.Offers,
                   })}
                 >
-                  <Typography variant="body1">Account</Typography>
+                  <Typography variant="body1">Offers</Typography>
+                </ListItemText>
+              </ListItemCustom>
+
+              <ListItemCustom
+                key="points"
+                button
+                alignItems="center"
+                onClick={() => handleListClick(config.tabs.Points)}
+                selected={tab === config.tabs.Points}
+                onMouseEnter={() => setPointsActive(true)}
+                onMouseLeave={() => setPointsActive(false)}
+              >
+                <ListItemIcon>
+                  <MonetizationOn />
+                </ListItemIcon>
+                <ListItemText
+                  className={clsx({
+                    [classes.hideText]: hideText,
+                    [classes.drawerActiveText]:
+                      pointsActive || tab === config.tabs.Points,
+                    [classes.drawerText]:
+                      !pointsActive && tab !== config.tabs.Points,
+                  })}
+                >
+                  <Typography variant="body1">Points</Typography>
+                </ListItemText>
+              </ListItemCustom>
+
+              <ListItemCustom
+                key="info"
+                button
+                alignItems="center"
+                onClick={() => handleListClick(config.tabs.Info)}
+                selected={tab === config.tabs.Info}
+                onMouseEnter={() => setInfoActive(true)}
+                onMouseLeave={() => setInfoActive(false)}
+              >
+                <ListItemIcon>
+                  <Info />
+                </ListItemIcon>
+                <ListItemText
+                  className={clsx({
+                    [classes.hideText]: hideText,
+                    [classes.drawerActiveText]:
+                      infoActive || tab === config.tabs.Info,
+                    [classes.drawerText]:
+                      !infoActive && tab !== config.tabs.Info,
+                  })}
+                >
+                  <Typography variant="body1">Info</Typography>
                 </ListItemText>
               </ListItemCustom>
             </List>

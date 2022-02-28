@@ -6,10 +6,13 @@ const useStyles = makeStyles((theme) => ({
   pageCard: {
     padding: "15px",
     marginRight: "25px",
-    marginBottom: "25px",
+    marginBottom: "15px",
   },
   pageCardSubTitle: {
     color: "gray",
+  },
+  titlesWrapper: {
+    marginBottom: "25px",
   },
 }));
 
@@ -19,16 +22,23 @@ function PageHeader({ title, subTitle, children }) {
     <>
       <Box display="flex">
         <Card className={classes.pageCard}>{children}</Card>
-        <Box display="flex" flexDirection="column">
+        <Box
+          display="flex"
+          className={classes.titlesWrapper}
+          flexDirection="column"
+          justifyContent="center"
+        >
           <Typography variant="h5">{title}</Typography>
-          <Typography
-            variant="subtitle1"
-            classes={{
-              root: classes.pageCardSubTitle,
-            }}
-          >
-            {subTitle}
-          </Typography>
+          {subTitle && (
+            <Typography
+              variant="subtitle1"
+              classes={{
+                root: classes.pageCardSubTitle,
+              }}
+            >
+              {subTitle}
+            </Typography>
+          )}
         </Box>
       </Box>
     </>

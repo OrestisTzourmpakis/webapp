@@ -44,30 +44,34 @@ function Companies() {
 
   const handleChange = (event, value) => setPage(value);
 
-  const listBody = (company) => (
-    <ListItem
-      key={company.id}
-      onClick={() => {
-        navigate(`/companies/${company.id}`);
-      }}
-      classes={{ root: classes.root }}
-    >
-      <CardItem
-        name={company.name}
-        logo={company.logo}
-        companySalesCount={company.companySalesCount}
-        companyUsersCount={company.companyUsersCount}
-        companyStoresCount={company.companyStoresCount}
-      />
-    </ListItem>
-  );
+  const listBody = (company) => {
+    console.log(company);
+    return (
+      <ListItem
+        key={company.id}
+        onClick={() => {
+          navigate(`/companies/${company.id}`);
+        }}
+        classes={{ root: classes.root }}
+      >
+        <CardItem
+          name={company.name}
+          logo={company.logo}
+          companySalesCount={company.companySalesCount}
+          companyUsersCount={company.companyUsersCount}
+          companyStoresCount={company.companyStoresCount}
+        />
+      </ListItem>
+    );
+  };
 
   useEffect(() => {
     changeTab(config.tabs.Companies);
     const Init = async () => {
+      console.log("called");
       try {
-        //const { data } = await getAllCompanies();
-        const data = companiesData();
+        const { data } = await getAllCompanies();
+        //const data = companiesData();
         setCompanies(data);
         console.log(data);
       } catch (ex) {
@@ -90,7 +94,11 @@ function Companies() {
                 <PageHeader title="Companies" subTitle="List of companies">
                   <Business fontSize="large" />
                 </PageHeader>
-                <ListWithPagination data={companies} listItem={listBody} />
+                <ListWithPagination
+                  data={companies}
+                  listItem={listBody}
+                  searchKeys={["name"]}
+                />
               </Box>
               {/* <Grid item container direction="column">
                 <PageHeader title="Companies" subTitle="List of companies">

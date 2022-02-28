@@ -6,7 +6,10 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { SnackbarContext } from "../contexts/SnackbarContext";
+import { handleErrors } from "../utils/handleErrors";
+import { register } from "../services/userService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,10 +48,29 @@ function RegisterForm({ handleClose }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
-
-  const handleSubmit = (e) => {
+  const { openSnackbar } = useContext(SnackbarContext);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(username, email, password, confirmPassword);
+    try {
+      setErrors([]);
+      // validations!!
+      if (password !== confirmPassword)
+        throw "Password and Confirm Password must match";
+      const result = await register({
+        email,
+        password,
+        userName: username,
+      });
+      openSnackbar(
+        "Registared completed. A verifaction link was sent to your email address.",
+        false
+      );
+      handleClose();
+      // register the user!!!
+    } catch (ex) {
+      handleErrors(ex, setErrors);
+    }
     // close then
   };
 
@@ -93,9 +115,9 @@ function RegisterForm({ handleClose }) {
           <Box
             display="flex"
             style={{
-              width: "80%",
+              width: "100%",
               marginTop: "10px",
-              marginLeft: "50px",
+              marginLeft: "0px",
             }}
           >
             <ul className={classes.errorsList}>

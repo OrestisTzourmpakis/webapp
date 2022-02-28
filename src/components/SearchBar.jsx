@@ -27,13 +27,18 @@ const useStyles = makeStyles((them) => ({
   },
 }));
 
-function SearchBar() {
+function SearchBar({ value, setValue }) {
   const classes = useStyles();
   return (
     <Paper className={classes.paperWrapper} elevation={3}>
       <Box display="flex" alignItems="center">
         <Search style={{ color: "#767676" }} fontSize="medium" />
-        <input placeholder="Search..." className={classes.searchInput} />
+        <input
+          placeholder="Search..."
+          className={classes.searchInput}
+          value={value}
+          onChange={(e) => setValue(e.currentTarget.value)}
+        />
       </Box>
     </Paper>
   );

@@ -1,14 +1,16 @@
 import {
   AppBar,
+  Avatar,
   Box,
   Container,
   Grid,
+  IconButton,
   makeStyles,
   Tab,
   Tabs,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import PropTypes from "prop-types";
 import { useTheme } from "@material-ui/styles";
@@ -16,7 +18,10 @@ import SwipeableViews from "react-swipeable-views/lib/SwipeableViews";
 import CompanyInfo from "./CompanyInfo";
 import CompanyStores from "./CompanyStores";
 import CompanySales from "./CompanySales";
-import { Business } from "@material-ui/icons";
+import { ArrowBack, Business } from "@material-ui/icons";
+import { useNavigate, useParams } from "react-router-dom";
+import { CompanyDetailsContext } from "../../contexts/CompanyDetailsContext";
+import { getCompanyById } from "../../services/companyService";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,6 +66,21 @@ function CompanyDetails() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const params = useParams();
+  const navigate = useNavigate();
+  const { company, setCompany } = useContext(CompanyDetailsContext);
+  useEffect(() => {
+    const Init = async () => {
+      // get the params!!!!
+      const { companyId: id } = params;
+      const { data } = await getCompanyById(id);
+      // get the company!!!!
+      // exw edw pera to id tou company!!!!!
+      console.log(data);
+      setCompany(data);
+    };
+    Init();
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -77,8 +97,11 @@ function CompanyDetails() {
           <Grid item xs>
             <Container>
               <div className={classes.root}>
-                <PageHeader title="Company name" subTitle="Company info">
-                  <Business fontSize="large" />
+                <IconButton onClick={() => navigate(-1)}>
+                  <ArrowBack />
+                </IconButton>
+                <PageHeader title={company?.name}>
+                  <Avatar src={company?.logo} />
                 </PageHeader>
                 <AppBar position="static" color="default">
                   <Tabs

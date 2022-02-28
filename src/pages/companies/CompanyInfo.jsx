@@ -11,7 +11,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CompanyDetailsContext } from "../../contexts/CompanyDetailsContext";
+import { UserContext } from "../../contexts/UserContext";
+import {
+  getCompanyById,
+  getCompanyByUserEmail,
+} from "../../services/companyService";
 
 const useStyles = makeStyles((theme) => ({
   paperWrapper: {
@@ -28,10 +34,35 @@ const useStyles = makeStyles((theme) => ({
 
 function CompanyInfo() {
   const classes = useStyles();
-
+  const { company } = useContext(CompanyDetailsContext);
+  const { authed } = useContext(UserContext);
+  const [companyModel, setCompanyModel] = useState({
+    name: "",
+    pointsEuro: 0,
+    euroPoints: 0,
+  });
+  //console.log("Sto company info to companyId:", companyId);
   useEffect(() => {
-    console.log("Company Info");
-  }, []);
+    const Init = async () => {
+      if (company === null) return;
+      // call the api
+      // const { data } = await getCompanyById(companyId);
+      // success get the data of the company!!!
+      setCompanyModel({
+        pointsEuro: company.pointsToEuroRatio,
+        euroPoints: company.euroToPointsRatio,
+        facebook: company.facebook,
+        instagram: company.instagram,
+        twitter: company.twitter,
+        website: company.website,
+        name: company.name,
+      });
+      //console.log("Ta data!!!", data);
+      console.log("Company Info");
+    };
+    Init();
+  }, [company, authed]);
+
   return (
     <>
       <Paper className={classes.paperWrapper}>
@@ -57,7 +88,7 @@ function CompanyInfo() {
                     Name
                   </Typography>
                   <Typography variant="h6">
-                    <b>Company name</b>
+                    <b>{companyModel.name}</b>
                   </Typography>
                   <Divider />
                 </Box>
@@ -74,7 +105,7 @@ function CompanyInfo() {
                     Points:Euro
                   </Typography>
                   <Typography variant="h6">
-                    <b>0.0002</b>
+                    <b>{companyModel.pointsEuro}</b>
                   </Typography>
                   <Divider />
                 </Box>
@@ -91,7 +122,7 @@ function CompanyInfo() {
                     Euro:Points
                   </Typography>
                   <Typography variant="h6">
-                    <b>0.23</b>
+                    <b>{companyModel.euroPoints}</b>
                   </Typography>
                   <Divider />
                 </Box>

@@ -20,3 +20,10 @@ export async function getSaleById(email)
     console.log(data);
     return data;
 }
+
+export async function getSalesByCompanyId(id)
+{
+    let sales = apiEndpoint + `getActiveSalesByCompanyId?id=${id}`;
+    const { data } = await http.get(sales);
+    return data;
+}

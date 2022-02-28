@@ -16,10 +16,10 @@ import CardItem from "../../components/CardItem";
 import { useNavigate } from "react-router-dom";
 import SaleCardItem from "../../components/SaleCardItem";
 import CustomDialog from "../../components/CustomDialog";
-import { SignalCellularNoSimSharp } from "@material-ui/icons";
 import OffersList from "../../components/OffersList";
 import { salesData } from "../../services/dummyData";
-
+import { CompanyDetailsContext } from "../../contexts/CompanyDetailsContext";
+import { getSalesByCompanyId } from "../../services/salesService";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "block",
@@ -32,15 +32,26 @@ const useStyles = makeStyles((theme) => ({
 
 function CompanySales() {
   const [sales, setSales] = useState([]);
+  const { company } = useContext(CompanyDetailsContext);
+  // useEffect(() => {
+  //   const Init = async () => {
+  //     try {
+  //       const data = salesData();
+  //       setSales(data);
+  //     } catch (ex) {}
+  //   };
+  //   Init();
+  // }, []);
+
   useEffect(() => {
     const Init = async () => {
-      try {
-        const data = salesData();
-        setSales(data);
-      } catch (ex) {}
+      if (company === null) return;
+      const { data } = await getSalesByCompanyId(company.id);
+      console.log(data);
+      setSales(data);
     };
     Init();
-  }, []);
+  }, [company]);
 
   return (
     <>

@@ -4,20 +4,34 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { CompanyDetailsContextProvider } from "./contexts/CompanyDetailsContext";
 import Account from "./pages/account/Account";
 import Companies from "./pages/companies/Companies";
 import CompanyDetails from "./pages/companies/CompanyDetails";
 import Home from "./pages/home/Home";
+import Info from "./pages/info/Info";
 import MainPage from "./pages/mainpage/MainPage";
+import Offers from "./pages/offers/Offers";
 import Points from "./pages/points/Points";
 
 export const createRoutes = () => (
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/companies" element={<Companies />} />
-    <Route path="/companies/:companyId" element={<CompanyDetails />} />
+    <Route
+      path="/companies/:companyId"
+      element={
+        <>
+          <CompanyDetailsContextProvider>
+            <CompanyDetails />
+          </CompanyDetailsContextProvider>
+        </>
+      }
+    />
     <Route path="/points" element={<Points />} />
     <Route path="/account" element={<Account />} />
+    <Route path="/offers" element={<Offers />} />
+    <Route path="/info" element={<Info />} />
     <Route path="*" element={<Companies />} />
   </Routes>
 );

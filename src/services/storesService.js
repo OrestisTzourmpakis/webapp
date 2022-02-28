@@ -25,3 +25,10 @@ export async function getStoreByEmail(email)
     const {data} = await http.get(getStores);
     return data;
 }
+
+export async function getStoresByCompanyId(id)
+{
+    let stores = apiEndpoint + `getStoresByCompanyId?id=${id}`;
+    const { data } = await http.get(stores);
+    return data;
+}

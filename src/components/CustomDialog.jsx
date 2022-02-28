@@ -39,7 +39,9 @@ function CustomDialog({ open, onClose, title, description, image }) {
     const { children, classes, onClose, ...other } = props;
     return (
       <DialogTitle disableTypography className={classes.root} {...other}>
-        <Typography variant="h6">{children}</Typography>
+        <Typography variant="h6" style={{ marginRight: "50px" }}>
+          {children}
+        </Typography>
         {onClose ? (
           <IconButton className={classes.closeButton} onClick={onClose}>
             <Close />

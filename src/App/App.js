@@ -5,6 +5,8 @@ import { TabContextProvider } from '../contexts/TabContext';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from '../pages/login/Login';
 import RegisterPage from '../pages/register/RegisterPage';
+import { SnackbarContextProvider } from '../contexts/SnackbarContext';
+import ExternalLoginPage from '../pages/login/ExternalLoginPage';
 
 
 const theme = createTheme({
@@ -26,6 +28,9 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
+        <SnackbarContextProvider>
+
+       
       <CssBaseline/>
       {/* Appbar with drawert first */}
       {/* <Typography variant='h2'>
@@ -34,6 +39,8 @@ function App() {
       <Router>
             <Routes>
               <Route path="/login" element={<Login />} />
+      <Route path="/external-login" element={<ExternalLoginPage />} />
+
               <Route path="/register" element={<RegisterPage />} />
 
             <Route path="/*" element={
@@ -42,7 +49,8 @@ function App() {
               </TabContextProvider>
               }/>
             </Routes>
-        </Router>
+          </Router>
+          </SnackbarContextProvider>
         </ThemeProvider>
     </>
   );

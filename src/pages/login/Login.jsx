@@ -4,6 +4,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoginCustomInput from "../../components/LoginCustomInput";
 import ModalDialog from "../../components/ModalDialog";
+import { UserContext } from "../../contexts/UserContext";
+import { authenticateUser } from "../../services/userService";
+import { handleErrors } from "../../utils/handleErrors.js";
 const useStyles = makeStyles((theme) => ({
   boxWrapper: {
     height: "100vh",
@@ -71,17 +74,17 @@ function Login() {
   const passwordIcon = <Lock className="icon" />;
   const location = useLocation();
   const [registerFormOpen, setRegisterFormOpen] = useState(false);
-  //const { userLogin } = useContext(UserContext);
+  const { userLogin, authed } = useContext(UserContext);
   const classes = useStyles();
   let navigate = useNavigate();
 
   const handleLoginClick = async () => {
     try {
       setErrors([]);
-      //await userLogin({ email, password });
+      await userLogin({ email, password });
       navigate("/");
     } catch (ex) {
-      // handleErrors(ex, setErrors);
+      handleErrors(ex, setErrors);
     }
   };
 
@@ -89,11 +92,28 @@ function Login() {
 
   const handleClose = () => setRegisterFormOpen(false);
 
+  // useEffect(() => {
+  //   // check if i have location state!!!!
+  //   if (location.state === null) return;
+  //   console.log(location.state.ex);
+  //   setErrors([location.state.error.ex]);
+  // }, []);
+
   useEffect(() => {
+    const Init = async () => {
+      try {
+        const result = await authenticateUser();
+        navigate("/");
+      } catch (ex) {}
+      console.log("sto login page:", authed);
+      if (location.state === null) return;
+      console.log(location.state.ex);
+      setErrors([location.state.error.ex]);
+    };
     // check if i have location state!!!!
-    if (location.state === null) return;
-    console.log(location.state.ex);
-    setErrors([location.state.error.ex]);
+    // check if user is authenticated!!
+
+    Init();
   }, []);
 
   const handleEmailChange = (newValue) => {
@@ -171,7 +191,7 @@ function Login() {
                 </Box>
               </Box>
             </form>
-            <Box display="flex" flexDirection="column" a>
+            <Box display="flex" flexDirection="column">
               <form
                 className="googleForm"
                 method="GET"

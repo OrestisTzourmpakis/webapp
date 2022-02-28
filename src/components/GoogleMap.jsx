@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -7,9 +7,10 @@ import {
 } from "@react-google-maps/api";
 import mapStyles from "../utils/mapStyles";
 import { Box, makeStyles, Typography } from "@material-ui/core";
+import Geocode from "react-geocode";
 
 const mapContainerStyle = {
-  width: "100vw",
+  width: "100%",
   height: "50vh",
 };
 const center = {
@@ -26,7 +27,7 @@ const options = {
 const useStyles = makeStyles((theme) => ({
   mapWrapper: {
     position: "relative",
-    width: "100vw",
+    width: "100%",
     height: "50vh",
   },
   mapHeader: {
@@ -37,13 +38,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GoogleMapContainer() {
+function GoogleMapContainer({ stores }) {
+  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+  // Geocode.fromAddress("Eiffel Tower").then(
+  //   (response) => {
+  //     const { lat, lng } = response.results[0].geometry.location;
+  //     console.log(lat, lng);
+  //   },
+  //   (error) => {
+  //     console.error(error);
+  //   }
+  // );
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
   const classes = useStyles();
   const [markers, setMarkers] = useState([]);
+  const [storesMarker, setStoresMarker] = useState([]);
   const onMapClick = useCallback((event) => {
     setMarkers([
       ...markers,
@@ -54,6 +67,11 @@ function GoogleMapContainer() {
       },
     ]);
   }, []);
+
+  useEffect(() => {
+    console.log("Tas stores sto google maps:", stores);
+    setMarkers(stores);
+  }, [stores]);
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -82,7 +100,7 @@ function GoogleMapContainer() {
         >
           {markers.map((marker) => (
             <Marker
-              key={marker.time.toISOString()}
+              key={marker.address}
               position={{
                 lat: marker.lat,
                 lng: marker.lng,
