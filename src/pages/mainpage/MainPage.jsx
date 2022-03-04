@@ -53,19 +53,15 @@ function MainPage() {
     const Init = async () => {
       //console.log("Main Page called");
       // call the server to get the data and save the user after that!!
-      console.log("Inside the main page useeffect");
+
       if (authed.email === "") {
-        console.log("Authed email does not exists get it!!!");
         try {
           const response = await authenticateUser();
           if (response.roles.length !== 0) throw "";
-          const obj = userDetailObject(response);
-          console.log("To response apo to authenticate user!!!", response);
+
           setUserContextObject(obj);
           return;
         } catch (ex) {
-          console.log("error");
-          console.log("Error sto authenticate user:", ex);
           navigate("/login");
         }
       }

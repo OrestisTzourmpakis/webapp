@@ -102,14 +102,13 @@ function Login() {
   useEffect(() => {
     const Init = async () => {
       try {
-        console.log("Current url:", window.location.origin.toString());
         const result = await authenticateUser();
         if (result.roles.length !== 0) return;
         navigate("/");
       } catch (ex) {}
-      console.log("sto login page:", authed);
+
       if (location.state === null) return;
-      console.log(location.state.ex);
+
       setErrors([location.state.error.ex]);
     };
     // check if i have location state!!!!

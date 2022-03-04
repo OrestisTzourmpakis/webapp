@@ -72,14 +72,12 @@ function CompanySales() {
     const Init = async () => {
       if (company === null) return;
       const { data } = await getSalesByCompanyId(company.id);
-      console.log(data);
       setSales(data);
     };
     Init();
   }, [company]);
 
   const listBody = (sale) => {
-    console.log(sale);
     return (
       <ListItem
         button

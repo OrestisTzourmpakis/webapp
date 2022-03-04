@@ -70,10 +70,8 @@ function ContactForm() {
   const { openSnackbar } = useContext(SnackbarContext);
   const [message, setMessage] = useState("");
   const handleSubmit = async (e) => {
-    console.log("bhke edw");
     e.preventDefault();
     try {
-      console.log("kanei to request");
       const result = await sendEmail(topic, message, authed?.email);
       setTopic("");
       setMessage("");

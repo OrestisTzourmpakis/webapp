@@ -45,7 +45,6 @@ function Companies() {
   const handleChange = (event, value) => setPage(value);
 
   const listBody = (company) => {
-    console.log(company);
     return (
       <ListItem
         key={company.id}
@@ -68,15 +67,11 @@ function Companies() {
   useEffect(() => {
     changeTab(config.tabs.Companies);
     const Init = async () => {
-      console.log("called");
       try {
         const { data } = await getAllCompanies();
         //const data = companiesData();
         setCompanies(data);
-        console.log(data);
-      } catch (ex) {
-        console.log("Error fetching companies");
-      }
+      } catch (ex) {}
     };
     Init();
   }, []);

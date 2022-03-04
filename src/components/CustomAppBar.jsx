@@ -43,10 +43,7 @@ function CustomAppBar() {
     try {
       const result = await logOut();
       navigate("/login");
-    } catch (ex) {
-      console.log("error");
-    }
-    console.log("confirmed!!!");
+    } catch (ex) {}
   };
 
   const handleLogout = () => {

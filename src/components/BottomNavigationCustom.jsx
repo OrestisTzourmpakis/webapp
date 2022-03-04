@@ -43,11 +43,6 @@ function BottomNavigationCustom() {
         showLabels
         style={{ backgroundColor: "#222d34" }}
         value={bottomNavigationIndex}
-        // value={value}
-        onChange={(event, newValue) => {
-          console.log("Bottom navigation click:", newValue);
-          //setValue(newValue);
-        }}
       >
         <BottomNavigationAction
           classes={{ root: classes.bottomNavigationRoot }}

@@ -11,10 +11,6 @@ export function useAuth() {
     authed: false,
   });
 
-  useEffect(() => {
-    console.log("useAuth called");
-  }, []);
-
   // if we are admin
   const [companyOwnerEmail, setCompanyOwnerEmail] = useState(null);
 
@@ -23,7 +19,6 @@ export function useAuth() {
     // const checkIfAdmin = userDetails.roles.filter(
     //   (c) => c === roles.Administrator || c === roles.CompanyOwner
     // );
-    console.log("Ta data apo to user context:", userDetails);
     if (userDetails.roles.length > 0) throw "Go to admin!";
     // setJwtUser(userDetails);;
     // se the user here!!
@@ -47,7 +42,6 @@ export function useAuth() {
   };
 
   const setUserContextObject = (response) => {
-    console.log("To response sto usercontext:", response);
     setAuthed({ ...authed, ...response, authed: true });
   };
 
@@ -69,9 +63,6 @@ export function useAuth() {
 export const UserContext = createContext();
 export function UserContextProvider(props) {
   const auth = useAuth();
-  useEffect(() => {
-    console.log("usercontext called!!!");
-  }, []);
 
   return (
     <UserContext.Provider value={{ ...auth }}>

@@ -39,7 +39,6 @@ function Offers() {
     setDialogConfig({ ...dialogConfig, open: false });
   };
   const listBody = (sale) => {
-    console.log(sale);
     return (
       <ListItem
         button

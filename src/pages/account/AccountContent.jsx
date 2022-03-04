@@ -110,7 +110,6 @@ function AccountContent() {
       confirm: confirmResetPassword,
       open: true,
     });
-    console.log("Reset password");
   };
 
   const confirmResetPassword = async () => {
@@ -118,11 +117,9 @@ function AccountContent() {
       const result = await requestResetPassword(authed?.email);
       openSnackbar("A reset email was send.", false);
     } catch (ex) {
-      console.log("errors");
     } finally {
       openDialog(false);
     }
-    console.log("Reset password called!!");
   };
 
   const validations = () => {

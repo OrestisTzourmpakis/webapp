@@ -15,11 +15,9 @@ function ExternalLoginPage() {
       if (email !== null && providerKey !== null && loginProvider !== null) {
         // go to the login
         try {
-          console.log("Mesa sto external login");
           await userLogin({ email, providerKey, loginProvider });
           navigate("/");
         } catch (ex) {
-          console.log(ex);
           //let response = ex.response.data.errorMessage;
           navigate("/login", {
             state: {

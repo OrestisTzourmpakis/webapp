@@ -58,7 +58,6 @@ function CompanyInfo() {
         name: company.name,
       });
       //console.log("Ta data!!!", data);
-      console.log("Company Info");
     };
     Init();
   }, [company, authed]);

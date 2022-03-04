@@ -72,7 +72,6 @@ function GoogleMapContainer({ stores }) {
   }, []);
 
   useEffect(() => {
-    console.log("Tas stores sto google maps:", stores);
     setMarkers(stores);
   }, [stores]);
 

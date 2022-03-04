@@ -76,7 +76,6 @@ function CompanyDetails() {
       const { data } = await getCompanyById(id);
       // get the company!!!!
       // exw edw pera to id tou company!!!!!
-      console.log(data);
       setCompany(data);
     };
     Init();

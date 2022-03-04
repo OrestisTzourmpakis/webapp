@@ -10,12 +10,10 @@ export function TabContextProvider(props) {
   const [bottomNavigationIndex, setBottomNavigationIndex] = useState(0);
   const navigate = useNavigate();
   const changeTab = (newTab) => {
-    console.log("Apo to tab context:", newTab);
     setBottomNavigationIndex(newTab);
     setTab(newTab);
   };
 
-  console.log(tab);
   return (
     <TabContext.Provider value={{ tab, changeTab, bottomNavigationIndex }}>
       {props.children}

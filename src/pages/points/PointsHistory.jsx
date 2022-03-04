@@ -13,9 +13,7 @@ function PointsHistory() {
       try {
         const { data } = await getUserPointsHistory(authed.email);
         setData(data);
-      } catch (ex) {
-        console.log(ex);
-      }
+      } catch (ex) {}
     };
     Init();
   }, []);

@@ -51,7 +51,6 @@ function RegisterForm({ handleClose }) {
   const { openSnackbar } = useContext(SnackbarContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username, email, password, confirmPassword);
     try {
       setErrors([]);
       // validations!!

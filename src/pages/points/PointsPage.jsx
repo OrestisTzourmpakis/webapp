@@ -65,10 +65,6 @@ function PointsPage() {
     changeTab(config.tabs.Points);
   }, []);
 
-  useEffect(() => {
-    console.log(menuIndex);
-  }, [menuIndex]);
-
   const handleListItemClick = (index) => {
     setMenuIndex(index);
   };

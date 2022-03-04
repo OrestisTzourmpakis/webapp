@@ -16,10 +16,7 @@ function Points() {
       try {
         const { data } = await getUserPoints(authed.email);
         setData(data);
-        console.log("Ta data points:", data);
-      } catch (ex) {
-        console.log("Points content error:", ex);
-      }
+      } catch (ex) {}
     };
     Init();
   }, [authed]);

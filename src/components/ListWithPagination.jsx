@@ -7,19 +7,16 @@ import _ from "lodash";
 function ListWithPagination({ data, listItem, searchKeys }) {
   const itemPerPage = 3;
   const [page, setPage] = useState(1);
-  console.log(data);
   const [filtered, setFiltered] = useState(data);
   const [search, setSearch] = useState("");
   const handleChange = (event, value) => setPage(value);
 
   useEffect(() => {
-    console.log("changes");
     const newFilter = data.filter((record) => {
       //console.log(record);
       let satisfied = false;
       searchKeys.forEach((item) => {
         var showKey = _.get(record, item);
-        console.log(showKey);
         var result = String(_.get(record, item))
           .toLowerCase()
           .includes(search.toLowerCase());
