@@ -1,5 +1,6 @@
 import { Box, Button, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
   const classes = useStyles();
+  const navigate = useNavigate();
   return (
     <>
       <Box className={classes.header}>
@@ -33,14 +35,17 @@ function Header() {
         >
           <Typography variant="h4">Welcome to Loayalty Platform</Typography>
           <Typography variant="body1" style={{ marginTop: "10px" }}>
-            If you don't have an account please Register here.
+            Take advantage of the current active offers, earn and redeem your
+            points to get rewards.
           </Typography>
           <Box
             display="flex"
             justifyContent="center"
             style={{ marginTop: "10px" }}
           >
-            <Button variant="contained">Get Started</Button>
+            <Button variant="contained" onClick={() => navigate("/offers")}>
+              Check Offers
+            </Button>
           </Box>
         </Box>
       </Box>

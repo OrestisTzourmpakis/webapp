@@ -102,7 +102,9 @@ function Login() {
   useEffect(() => {
     const Init = async () => {
       try {
+        console.log("Current url:", window.location.origin.toString());
         const result = await authenticateUser();
+        if (result.roles.length !== 0) return;
         navigate("/");
       } catch (ex) {}
       console.log("sto login page:", authed);
@@ -195,8 +197,14 @@ function Login() {
               <form
                 className="googleForm"
                 method="GET"
-                action={"https://localhost:4004/api/useraccount/googlelogin"}
+                //window.location.origin.toString()
+                action={`https://localhost:4004/api/useraccount/googlelogin`}
               >
+                <input
+                  type="hidden"
+                  name="viewUrl"
+                  value={window.location.origin.toString()}
+                />
                 <Typography
                   align="center"
                   style={{ color: "black" }}

@@ -34,3 +34,25 @@ export async function register(user) {
     return result;
 }
 
+export async function updateUser(model)
+{
+    let update = apiEndpoint +"updateUser";
+    const result = await http.post(update,model);
+}
+
+export async function requestResetPassword(email)
+{
+    let resetPassword = apiEndpoint + `requestResetPassword?email=${email}`;
+    const result = await http.get(resetPassword);
+}
+
+export async function sendEmail(topic,message,email)
+{
+    const model = {
+        topic,
+        message,
+        email
+    };
+    let send = apiEndpoint + `sendEmail`;
+    const result = await http.post(send,model);
+}

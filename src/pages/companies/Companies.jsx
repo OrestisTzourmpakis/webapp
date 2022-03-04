@@ -80,8 +80,12 @@ function Companies() {
     };
     Init();
   }, []);
+
   return (
     <>
+      {/* <div
+        style={{ height: "200px", width: "100%", backgroundColor: "red" }}
+      ></div> */}
       <Container style={{ paddingTop: "50px" }}>
         <Grid container>
           <Grid item xs={12}>
@@ -100,46 +104,6 @@ function Companies() {
                   searchKeys={["name"]}
                 />
               </Box>
-              {/* <Grid item container direction="column">
-                <PageHeader title="Companies" subTitle="List of companies">
-                  <Business fontSize="large" />
-                </PageHeader>
-                <SearchBar />
-                <List>
-                  {companies
-                    .slice((page - 1) * itemPerPage, page * itemPerPage)
-                    .map((company) => (
-                      <ListItem
-                        key={company.id}
-                        onClick={() => {
-                          navigate(`/companies/${company.id}`);
-                        }}
-                        classes={{ root: classes.root }}
-                      >
-                        <CardItem
-                          name={company.name}
-                          logo={company.logo}
-                          companySalesCount={company.companySalesCount}
-                          companyUsersCount={company.companyUsersCount}
-                          companyStoresCount={company.companyStoresCount}
-                        />
-                      </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <Box display="flex" justifyContent="center">
-                  <Pagination
-                    count={Math.ceil(companies.length / itemPerPage)}
-                    page={page}
-                    onChange={handleChange}
-                    defaultPage={1}
-                    color="primary"
-                    size="large"
-                    showFirstButton
-                    showLastButton
-                  />
-                </Box>
-              </Grid> */}
             </Container>
           </Grid>
         </Grid>

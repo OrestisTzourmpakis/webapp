@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { TabContext } from "../../contexts/TabContext";
 import config from "../../config.json";
-import { Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import Carousel from "../../components/CustomCarousel";
 import Header from "../../components/Header";
 import Body from "../../components/Body";
@@ -23,10 +23,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Home() {
   const { changeTab } = useContext(TabContext);
+
   const classes = useStyles();
   useEffect(() => {
     changeTab(config.tabs.Home);
   }, []);
+
   return (
     <>
       <Grid container direction="column">
@@ -47,9 +49,10 @@ function Home() {
           <ContactForm />
         </Grid>
         {/* Footer */}
-        <Grid item xs={12}>
+
+        <Box display="flex" style={{ width: "100%" }}>
           <Footer />
-        </Grid>
+        </Box>
       </Grid>
     </>
   );

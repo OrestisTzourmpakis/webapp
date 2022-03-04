@@ -8,6 +8,7 @@ import {
 import mapStyles from "../utils/mapStyles";
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import Geocode from "react-geocode";
+import { Phone, Store } from "@material-ui/icons";
 
 const mapContainerStyle = {
   width: "100%",
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: "2",
   },
 }));
+const libraries = ["places"];
 
 function GoogleMapContainer({ stores }) {
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
@@ -52,11 +54,12 @@ function GoogleMapContainer({ stores }) {
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ["places"],
+    libraries,
   });
   const classes = useStyles();
   const [markers, setMarkers] = useState([]);
   const [storesMarker, setStoresMarker] = useState([]);
+  const [selected, setSelected] = useState(null);
   const onMapClick = useCallback((event) => {
     setMarkers([
       ...markers,
@@ -96,17 +99,51 @@ function GoogleMapContainer({ stores }) {
           zoom={15}
           center={center}
           options={options}
-          onClick={onMapClick}
+          //onClick={onMapClick}
         >
           {markers.map((marker) => (
             <Marker
-              key={marker.address}
+              key={marker.id}
               position={{
-                lat: marker.lat,
-                lng: marker.lng,
+                lat: marker.latitude,
+                lng: marker.longitude,
+              }}
+              onClick={() => {
+                console.log(marker);
+                setSelected(marker);
               }}
             />
           ))}
+          {selected ? (
+            <InfoWindow
+              position={{ lat: selected.latitude, lng: selected.longitude }}
+              onCloseClick={() => setSelected(null)}
+            >
+              <Box display="flex" flexDirection="column">
+                <Box display="flex">
+                  <Store />
+                  <Typography style={{ marginLeft: "5px" }} variant="subtitle1">
+                    {selected?.address}
+                  </Typography>
+                </Box>
+                <Box display="flex">
+                  <Phone />
+                  <Typography style={{ marginLeft: "5px" }} variant="subtitle1">
+                    {selected?.telephone ? (
+                      selected.telephone
+                    ) : (
+                      <Typography
+                        style={{ color: "lightgray" }}
+                        variant="subtitle1"
+                      >
+                        Not available
+                      </Typography>
+                    )}
+                  </Typography>
+                </Box>
+              </Box>
+            </InfoWindow>
+          ) : null}
         </GoogleMap>
       </div>
     </>

@@ -39,58 +39,10 @@ function CompanyStores() {
     const Init = async () => {
       if (company === null) return;
       const { data } = await getStoresByCompanyId(company?.id);
-      const arrObj = [];
-      const dd = data.map((item) => {
-        item.address = item.address + " Leivadia";
-
-        return item;
-      });
-      console.log(dd);
-      setStores(dd);
+      setCompanyMarkers(data);
     };
     Init();
   }, [company]);
-
-  useEffect(() => {
-    let arrObj = [];
-    const Init = async () => {
-      let i = 0;
-      let arr = [];
-      while (i <= stores.length - 1) {
-        var resposne = await Geocode.fromAddress(stores[i].address);
-        console.log(resposne);
-        let { lat, lng } = resposne.results[0].geometry.location;
-        let store = {
-          address: stores[i].address,
-          lat,
-          lng,
-        };
-        arr = [...arr, store];
-        i++;
-      }
-      setCompanyMarkers(arr);
-      console.log(arr);
-      // if (stores) {
-      //   setCompanyMarkers(async (value) =>
-      //     stores.map(async (store) => {
-      //       let response = Geocode.fromAddress(store.address).then(
-      //         (resp) => {
-      //           const { lat, lng } = resp.results[0].geometry.location;
-      //           setCompanyMarkers([
-      //             ...companyMarkers,
-      //             { address: store.address, lat, lng },
-      //           ]);
-      //         },
-      //         (error) => console.log(error)
-      //       );
-      //       return store;
-      //     })
-      //   );
-      // }
-    };
-    Init();
-    console.log("To telos:", arrObj);
-  }, [stores]);
 
   return (
     <>

@@ -2,19 +2,31 @@ import {
   Box,
   Container,
   Grid,
+  IconButton,
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import { Copyright } from "@material-ui/icons";
+import { Copyright, Facebook, Instagram, Language } from "@material-ui/icons";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   footerWrapper: {
     backgroundColor: "#302b27",
+    height: "100%",
+    width: "100%",
     minHeight: "20vh",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "30px",
+    },
   },
   footerContainer: {
     maxWidth: "600px",
+  },
+  socialIcons: {
+    color: "white",
+    "&:hover": {
+      color: "orange",
+    },
   },
 }));
 
@@ -32,6 +44,30 @@ function Footer() {
                   height={200}
                   width={200}
                 />
+              </Grid>
+              <Grid item xs={6} style={{ marginTop: "30px" }}>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  style={{ height: "100%" }}
+                >
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    style={{ height: "100%" }}
+                  >
+                    <IconButton className={classes.socialIcons}>
+                      <Language />
+                    </IconButton>
+                    <IconButton className={classes.socialIcons}>
+                      <Instagram />
+                    </IconButton>
+                    <IconButton className={classes.socialIcons}>
+                      <Facebook />
+                    </IconButton>
+                  </Box>
+                </Box>
               </Grid>
             </Grid>
             <Grid item container>

@@ -112,9 +112,9 @@ function CompanyDetails() {
                     variant="fullWidth"
                     aria-label="full width tabs example"
                   >
-                    <Tab label="Info" {...allyProps(0)} />
-                    <Tab label="Stores" {...allyProps(1)} />
-                    <Tab label="Sales" {...allyProps(2)} />
+                    <Tab label="Stores" {...allyProps(0)} />
+                    <Tab label="Offers" {...allyProps(1)} />
+                    <Tab label="Info" {...allyProps(2)} />
                   </Tabs>
                 </AppBar>
                 <SwipeableViews
@@ -124,17 +124,17 @@ function CompanyDetails() {
                 >
                   <TabPanel value={value} index={0} dir={theme.direction}>
                     <div>
-                      <CompanyInfo />
+                      <CompanyStores />
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1} dir={theme.direction}>
                     <div>
-                      <CompanyStores />
+                      <CompanySales />
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={2} dir={theme.direction}>
                     <div>
-                      <CompanySales />
+                      <CompanyInfo />
                     </div>
                   </TabPanel>
                 </SwipeableViews>

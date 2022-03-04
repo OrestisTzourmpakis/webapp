@@ -1,4 +1,5 @@
 import {
+  alpha,
   Box,
   Button,
   Container,
@@ -8,7 +9,11 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import { Send } from "@material-ui/icons";
+import React, { useContext, useState } from "react";
+import { SnackbarContext } from "../contexts/SnackbarContext";
+import { UserContext } from "../contexts/UserContext";
+import { sendEmail } from "../services/userService";
 
 const useStyles = makeStyles((theme) => ({
   contactWrapper: {
@@ -19,23 +24,70 @@ const useStyles = makeStyles((theme) => ({
   },
   contactContainer: {
     padding: "40px",
-
     maxWidth: "600px",
   },
   inputMargin: {
     marginTop: "10px",
     marginBottom: "10px",
   },
+  formInput: {
+    "&$focused": {
+      backgroundColor: "#fff",
+      borderColor: "red",
+    },
+  },
+  focused: {},
 }));
+
+const useStylesMessage = makeStyles((theme) => ({
+  root: {
+    border: "1px solid #e2e2e1",
+    overflow: "hidden",
+    borderRadius: 4,
+    color: "white",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    "&:hover": {},
+    "&$focused": {
+      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
+      borderColor: "white",
+      color: "white",
+    },
+  },
+  focused: {},
+}));
+
+function MessageTextField(props) {
+  const classes = useStylesMessage();
+  return (
+    <TextField InputProps={{ classes, disableUnderline: true }} {...props} />
+  );
+}
 
 function ContactForm() {
   const classes = useStyles();
+  const [topic, setTopic] = useState("");
+  const { authed } = useContext(UserContext);
+  const { openSnackbar } = useContext(SnackbarContext);
+  const [message, setMessage] = useState("");
+  const handleSubmit = async (e) => {
+    console.log("bhke edw");
+    e.preventDefault();
+    try {
+      console.log("kanei to request");
+      const result = await sendEmail(topic, message, authed?.email);
+      setTopic("");
+      setMessage("");
+      openSnackbar("Email Send Successfully!");
+    } catch (ex) {
+      openSnackbar("Something happend please try again later...", true);
+    }
+  };
   return (
     <>
       <div className={classes.contactWrapper}>
         <Container className={classes.contactContainer}>
           <div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <Grid container direction="column" style={{ marginTop: "20px" }}>
                 <Paper
                   elevation={3}
@@ -51,28 +103,34 @@ function ContactForm() {
                     >
                       Send us an email regarding any issue.
                     </Typography>
-                    <TextField
-                      className={classes.inputMargin}
-                      id="senderEmail"
-                      label="Your email"
-                    />
-                    <TextField
-                      className={classes.inputMargin}
-                      id="title"
+                    <MessageTextField
                       label="Topic"
+                      style={{ marginTop: "20px" }}
+                      className={classes.margin}
+                      variant="filled"
+                      onChange={(e) => setTopic(e.currentTarget.value)}
+                      value={topic}
+                      required
+                      id="topic"
                     />
-                    <TextField
-                      className={classes.inputMargin}
-                      id="description"
-                      multiline
-                      variant="outlined"
-                      minRows={4}
+                    <MessageTextField
+                      style={{ marginTop: "20px", marginBottom: "20px" }}
                       label="Message"
+                      className={classes.margin}
+                      variant="filled"
+                      multiline
+                      value={message}
+                      onChange={(e) => setMessage(e.currentTarget.value)}
+                      required
+                      minRows={4}
+                      id="message"
                     />
                     <Box display="flex" justifyContent="center">
                       <Button
                         variant="contained"
                         style={{ color: "black", backgroundColor: "white" }}
+                        type="submit"
+                        endIcon={<Send />}
                       >
                         Send
                       </Button>

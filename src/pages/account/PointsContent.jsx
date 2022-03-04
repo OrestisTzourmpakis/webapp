@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Chip,
   Container,
   Grid,
@@ -8,8 +10,13 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
+import { Business } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
+import { getUserPoints } from "../../services/pointsService";
+import { dateConfiguration } from "../../utils/dateConfiguration";
 
 const useStyles = makeStyles((them) => ({
   listItem: {
@@ -18,56 +25,76 @@ const useStyles = makeStyles((them) => ({
   },
 }));
 
-function PointsContent() {
+function PointsContent({ data, title, history }) {
   const classes = useStyles();
+  const navigate = useNavigate();
   return (
     <Container>
       <Grid container>
-        <Grid item container>
-          <Grid xs={2}></Grid>
-          <Grid xs={4}>
-            <Typography variant="h5">Total Points:</Typography>
-          </Grid>
-          <Grid xs={4}>
-            <Chip color="primary" label="2000" />
-          </Grid>
+        <Grid
+          item
+          container
+          style={{ marginBottom: "10px" }}
+          xs={12}
+          justifyContent="center"
+        >
+          <Typography align="center" variant="h5">
+            <b>{title}</b>
+          </Typography>
         </Grid>
         <Grid item container>
           <Container>
-            <List>
-              <ListItem className={classes.listItem}>
-                <ListItemText>
-                  <Typography variant="body">Company Name</Typography>
-                </ListItemText>
-                <ListItemSecondaryAction>
-                  <Typography variant="h5">200</Typography>
-                </ListItemSecondaryAction>
-              </ListItem>
-              <ListItem className={classes.listItem}>
-                <ListItemText>
-                  <Typography variant="body">Company Name</Typography>
-                </ListItemText>
-                <ListItemSecondaryAction>
-                  <Typography variant="h5">200</Typography>
-                </ListItemSecondaryAction>
-              </ListItem>
-              <ListItem className={classes.listItem}>
-                <ListItemText>
-                  <Typography variant="body">Company Name</Typography>
-                </ListItemText>
-                <ListItemSecondaryAction>
-                  <Typography variant="h5">200</Typography>
-                </ListItemSecondaryAction>
-              </ListItem>
-              <ListItem className={classes.listItem}>
-                <ListItemText>
-                  <Typography variant="body">Company Name</Typography>
-                </ListItemText>
-                <ListItemSecondaryAction>
-                  <Typography variant="h5">200</Typography>
-                </ListItemSecondaryAction>
-              </ListItem>
-            </List>
+            {data?.length > 0 ? (
+              <List>
+                {data?.map((elem) => (
+                  <ListItem key={elem.id} className={classes.listItem}>
+                    {/* <ListItemText>
+                      <Typography variant="body">
+                        {elem?.company?.name}
+                      </Typography>
+                    </ListItemText>
+                    <ListItemSecondaryAction>
+                      <Typography variant="h5">{elem?.total}</Typography>
+                    </ListItemSecondaryAction> */}
+                    <Box
+                      style={{ width: "100%" }}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between"
+                    >
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        startIcon={<Business />}
+                        onClick={() =>
+                          navigate(`/companies/${elem?.company?.id}`)
+                        }
+                      >
+                        {elem?.company?.name}
+                      </Button>
+
+                      {history ? (
+                        <>
+                          <Typography variant="body">
+                            {dateConfiguration(elem?.transactionDate)}
+                          </Typography>
+                          <Typography variant="h5">
+                            {elem?.transaction}
+                          </Typography>
+                        </>
+                      ) : (
+                        <Typography variant="h5">{elem?.total}</Typography>
+                      )}
+                    </Box>
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <Typography align="center" variant="body1">
+                No Results
+              </Typography>
+            )}
           </Container>
         </Grid>
       </Grid>

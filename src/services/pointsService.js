@@ -23,3 +23,17 @@ export async function getUserPointsAllCompanies(email)
     const { data } = await http.get(userPoints);
     return data;
 }
+
+export async function getUserPoints(email)
+{
+    let userPoints = apiEndpoint + `getUsersPoints?email=${email}`;
+    const { data } = await http.get(userPoints);
+    return data;
+}
+
+export async function getUserPointsHistory(email)
+{
+    let userPoints = apiEndpoint + `getUsersPointsHistory?email=${email}`;
+    const { data } = await http.get(userPoints);
+    return data;
+}

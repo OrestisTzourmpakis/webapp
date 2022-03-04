@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { TabContext } from "../../contexts/TabContext";
 import config from "../../config.json";
 import {
+  Box,
   Card,
   CardContent,
   Container,
@@ -10,6 +11,7 @@ import {
   List,
   ListItem,
   makeStyles,
+  Typography,
 } from "@material-ui/core";
 import PageHeader from "../../components/PageHeader";
 import CardItem from "../../components/CardItem";
@@ -20,6 +22,7 @@ import OffersList from "../../components/OffersList";
 import { salesData } from "../../services/dummyData";
 import { CompanyDetailsContext } from "../../contexts/CompanyDetailsContext";
 import { getSalesByCompanyId } from "../../services/salesService";
+import ListWithPagination from "../../components/ListWithPagination";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "block",
@@ -28,10 +31,19 @@ const useStyles = makeStyles((theme) => ({
       transform: "scale(1.1)",
     },
   },
+  listItem: {
+    display: "block",
+    paddingLeft: "5px",
+    paddingRight: "5px",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    cursor: "pointer",
+  },
 }));
 
 function CompanySales() {
   const [sales, setSales] = useState([]);
+  const classes = useStyles();
   const { company } = useContext(CompanyDetailsContext);
   // useEffect(() => {
   //   const Init = async () => {
@@ -42,6 +54,19 @@ function CompanySales() {
   //   };
   //   Init();
   // }, []);
+  const [dialogConfig, setDialogConfig] = useState({
+    open: false,
+    title: "",
+    description: "",
+    image: null,
+  });
+  const handleListClick = (title, description, image) => {
+    setDialogConfig({ ...dialogConfig, title, description, image, open: true });
+  };
+
+  const handleCloseDialog = () => {
+    setDialogConfig({ ...dialogConfig, open: false });
+  };
 
   useEffect(() => {
     const Init = async () => {
@@ -53,13 +78,47 @@ function CompanySales() {
     Init();
   }, [company]);
 
+  const listBody = (sale) => {
+    console.log(sale);
+    return (
+      <ListItem
+        button
+        key={sale.id}
+        onClick={() =>
+          handleListClick(sale.title, sale.description, sale.image)
+        }
+        classes={{ root: classes.listItem }}
+      >
+        <SaleCardItem
+          title={sale.title}
+          dateEnd={sale.dateEnd}
+          company={sale.company}
+          dateStart={sale.dateStart}
+        />
+      </ListItem>
+    );
+  };
+
   return (
     <>
       <Grid container>
-        <Grid xs={12}>
-          <OffersList sales={sales} />
+        <Grid item xs={12}>
+          <Container maxWidth="md">
+            <ListWithPagination
+              data={sales}
+              listItem={listBody}
+              searchKeys={["title"]}
+            />
+          </Container>
         </Grid>
       </Grid>
+      <CustomDialog
+        open={dialogConfig.open}
+        onClose={handleCloseDialog}
+        title={dialogConfig.title}
+        image={dialogConfig.image}
+        description={dialogConfig.description}
+      />
     </>
   );
 }

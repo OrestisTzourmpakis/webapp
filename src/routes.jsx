@@ -5,7 +5,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import { CompanyDetailsContextProvider } from "./contexts/CompanyDetailsContext";
-import Account from "./pages/account/Account";
+import PointsPage from "./pages/points/PointsPage";
+import AccountContent from "./pages/account/AccountContent";
 import Companies from "./pages/companies/Companies";
 import CompanyDetails from "./pages/companies/CompanyDetails";
 import Home from "./pages/home/Home";
@@ -28,8 +29,8 @@ export const createRoutes = () => (
         </>
       }
     />
-    <Route path="/points" element={<Points />} />
-    <Route path="/account" element={<Account />} />
+    <Route path="/points" element={<PointsPage />} />
+    <Route path="/profile" element={<AccountContent />} />
     <Route path="/offers" element={<Offers />} />
     <Route path="/info" element={<Info />} />
     <Route path="*" element={<Companies />} />

@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, List } from "@material-ui/core";
+import { Box, Divider, Grid, List, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import Pagination from "@material-ui/lab/Pagination";
@@ -43,26 +43,38 @@ function ListWithPagination({ data, listItem, searchKeys }) {
     <>
       <Grid item container direction="column">
         <SearchBar value={search} setValue={setSearch} />
-        <List>
-          {filtered
-            .slice((page - 1) * itemPerPage, page * itemPerPage)
-            .map((elem) => (
-              <>{listItem(elem)}</>
-            ))}
-        </List>
-        <Divider />
-        <Box display="flex" justifyContent="center">
-          <Pagination
-            count={Math.ceil(filtered.length / itemPerPage)}
-            page={page}
-            onChange={handleChange}
-            defaultPage={1}
-            color="primary"
-            size="large"
-            showFirstButton
-            showLastButton
-          />
-        </Box>
+        {filtered?.length !== 0 ? (
+          <>
+            <List>
+              {filtered
+                .slice((page - 1) * itemPerPage, page * itemPerPage)
+                .map((elem) => (
+                  <>{listItem(elem)}</>
+                ))}
+            </List>
+            <Divider />
+            <Box display="flex" justifyContent="center">
+              <Pagination
+                count={Math.ceil(filtered.length / itemPerPage)}
+                page={page}
+                onChange={handleChange}
+                defaultPage={1}
+                color="primary"
+                size="large"
+                showFirstButton
+                showLastButton
+              />
+            </Box>
+          </>
+        ) : (
+          <Typography
+            style={{ marginTop: "20px" }}
+            align="center"
+            variant="body1"
+          >
+            <b>No Results</b>
+          </Typography>
+        )}
       </Grid>
     </>
   );

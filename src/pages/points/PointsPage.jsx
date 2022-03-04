@@ -13,11 +13,19 @@ import {
   Paper,
 } from "@material-ui/core";
 import PageHeader from "../../components/PageHeader";
-import { IsoRounded, Person, Redeem, Settings } from "@material-ui/icons";
+import {
+  IsoRounded,
+  Person,
+  Redeem,
+  Settings,
+  SettingsBackupRestore,
+} from "@material-ui/icons";
 import clsx from "clsx";
-import AccountContent from "./AccountContent";
-import PointsContent from "./PointsContent";
-import HelpContent from "./HelpContent";
+import AccountContent from "../account/AccountContent";
+import PointsContent from "../account/PointsContent";
+import HelpContent from "../account/HelpContent";
+import Points from "./Points";
+import PointsHistory from "./PointsHistory";
 
 const useStyles = makeStyles((theme) => ({
   paperWrapper: {
@@ -50,11 +58,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Account() {
+function PointsPage() {
   const [menuIndex, setMenuIndex] = useState(0);
   const { changeTab } = useContext(TabContext);
   useEffect(() => {
-    changeTab(config.tabs.Account);
+    changeTab(config.tabs.Points);
   }, []);
 
   useEffect(() => {
@@ -66,12 +74,10 @@ function Account() {
   };
 
   const contentRenderer = () => {
-    if (menuIndex === 0) {
-      return <AccountContent />;
-    } else if (menuIndex === 1) {
-      return <PointsContent />;
-    } else if (menuIndex === 2) {
-      return <HelpContent />;
+    if (menuIndex === 1) {
+      return <PointsHistory />;
+    } else if (menuIndex === 0) {
+      return <Points />;
     }
   };
 
@@ -80,7 +86,7 @@ function Account() {
     <>
       <Container style={{ paddingTop: "50px" }}>
         <Grid container spacing={1}>
-          <Grid item md={3} className={classes.gridWrapper}>
+          <Grid item md={3} xs={12} className={classes.gridWrapper}>
             <Paper className={classes.paperWrapper}>
               <List classes={{ root: classes.listRoot }}>
                 <ListItem
@@ -94,14 +100,14 @@ function Account() {
                       }),
                     }}
                   >
-                    <Person />
+                    <Redeem />
                   </ListItemIcon>
                   <ListItemText
                     className={clsx({
                       [classes.listItemTextActive]: 0 === menuIndex,
                       [classes.listItemTextDisable]: 0 !== menuIndex,
                     })}
-                    primary="Account"
+                    primary="Points"
                   />
                 </ListItem>
                 <ListItem
@@ -115,35 +121,14 @@ function Account() {
                       }),
                     }}
                   >
-                    <Redeem />
+                    <SettingsBackupRestore />
                   </ListItemIcon>
                   <ListItemText
                     className={clsx({
                       [classes.listItemTextActive]: 1 === menuIndex,
                       [classes.listItemTextDisable]: 1 !== menuIndex,
                     })}
-                    primary="Points"
-                  />
-                </ListItem>
-                <ListItem
-                  className={classes.listItem}
-                  onClick={() => handleListItemClick(2)}
-                >
-                  <ListItemIcon
-                    classes={{
-                      root: clsx({
-                        [classes.listItemActive]: 2 === menuIndex,
-                      }),
-                    }}
-                  >
-                    <Settings />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={clsx({
-                      [classes.listItemTextActive]: 2 === menuIndex,
-                      [classes.listItemTextDisable]: 2 !== menuIndex,
-                    })}
-                    primary="Help"
+                    primary="Points History"
                   />
                 </ListItem>
               </List>
@@ -158,4 +143,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default PointsPage;
