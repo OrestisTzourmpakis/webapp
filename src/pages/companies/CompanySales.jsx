@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   Container,
+  CssBaseline,
   Grid,
   List,
   ListItem,
@@ -59,9 +60,10 @@ function CompanySales() {
     title: "",
     description: "",
     image: null,
+    salesCompany: null
   });
-  const handleListClick = (title, description, image) => {
-    setDialogConfig({ ...dialogConfig, title, description, image, open: true });
+  const handleListClick = (title, description, image,salesCompany) => {
+    setDialogConfig({ ...dialogConfig, title, description, image,salesCompany, open: true});
   };
 
   const handleCloseDialog = () => {
@@ -82,8 +84,13 @@ function CompanySales() {
       <ListItem
         button
         key={sale.id}
-        onClick={() =>
-          handleListClick(sale.title, sale.description, sale.image)
+        onClick={() =>{
+          console.log(sale.company);
+          console.log(sale.title);
+          console.log(sale.description);
+          handleListClick(sale.title, sale.description, sale.image,sale.company);
+
+          }
         }
         classes={{ root: classes.listItem }}
       >
@@ -92,6 +99,7 @@ function CompanySales() {
           dateEnd={sale.dateEnd}
           company={sale.company}
           dateStart={sale.dateStart}
+          description={sale.description}
         />
       </ListItem>
     );
@@ -101,11 +109,12 @@ function CompanySales() {
     <>
       <Grid container>
         <Grid item xs={12}>
-          <Container maxWidth="md">
+          <Container maxWidth="lg">
             <ListWithPagination
               data={sales}
               listItem={listBody}
               searchKeys={["title"]}
+            
             />
           </Container>
         </Grid>
@@ -116,6 +125,7 @@ function CompanySales() {
         title={dialogConfig.title}
         image={dialogConfig.image}
         description={dialogConfig.description}
+        salesCompany={dialogConfig.salesCompany}
       />
     </>
   );

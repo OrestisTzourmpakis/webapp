@@ -59,7 +59,7 @@ function MainPage() {
           const response = await authenticateUser();
           if (response.roles.length !== 0) throw "";
 
-          setUserContextObject(obj);
+          setUserContextObject(userDetailObject);
           return;
         } catch (ex) {
           navigate("/login");

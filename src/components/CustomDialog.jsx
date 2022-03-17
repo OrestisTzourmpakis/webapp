@@ -5,12 +5,15 @@ import {
   IconButton,
   makeStyles,
   Typography,
+  Button
 } from "@material-ui/core";
-import { CallMissedSharp, Close } from "@material-ui/icons";
+import { red } from "@material-ui/core/colors";
+import { CallMissedSharp, Close, Business } from "@material-ui/icons";
 import { withStyles } from "@material-ui/styles";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function CustomDialog({ open, onClose, title, description, image }) {
+function CustomDialog({ open, onClose, title, description, image, salesCompany }) {
   const useStyles = makeStyles((theme) => ({
     dialogImage: {
       margin: "10px",
@@ -31,9 +34,15 @@ function CustomDialog({ open, onClose, title, description, image }) {
       top: theme.spacing(1),
       color: theme.palette.grey[500],
     },
+    companyName: {
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "5px"
+      },
+    }
   });
 
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const CustomDialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
@@ -72,6 +81,18 @@ function CustomDialog({ open, onClose, title, description, image }) {
         </DialogContent>
 
         {image !== null && <img className={classes.dialogImage} src={image} />}
+        <Button
+                size="small"
+                variant="outlined"
+                color="primary"
+                style={{backgroundColor:"#3f51b5",color:"white",padding:"20px"}}
+                startIcon={<Business />}
+                onClick={() => navigate(`/companies/${salesCompany.id}`)}
+              >
+                <Typography className={classes.companyName} variant="subtitle2">
+                  Δειτε τα διαθεσιμα καταστηματα!
+                </Typography>
+              </Button>
       </Dialog>
     </>
   );

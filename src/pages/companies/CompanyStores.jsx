@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CompanyStores() {
-  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+  // Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+  Geocode.setApiKey(config.REACT_APP_GOOGLE_MAPS_API_KEY);
 
   const classes = useStyles();
   const { company } = useContext(CompanyDetailsContext);

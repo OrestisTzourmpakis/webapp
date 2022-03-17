@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import config from "../config.json";
 import {
   GoogleMap,
   useLoadScript,
@@ -41,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
 const libraries = ["places"];
 
 function GoogleMapContainer({ stores }) {
-  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+  // Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+  Geocode.setApiKey(config.REACT_APP_GOOGLE_MAPS_API_KEY);
   // Geocode.fromAddress("Eiffel Tower").then(
   //   (response) => {
   //     const { lat, lng } = response.results[0].geometry.location;
@@ -53,7 +55,8 @@ function GoogleMapContainer({ stores }) {
   // );
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey:config.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
   const classes = useStyles();

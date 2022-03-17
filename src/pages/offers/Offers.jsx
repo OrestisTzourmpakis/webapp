@@ -30,9 +30,10 @@ function Offers() {
     title: "",
     description: "",
     image: null,
+    salesCompany:null
   });
-  const handleListClick = (title, description, image) => {
-    setDialogConfig({ ...dialogConfig, title, description, image, open: true });
+  const handleListClick = (title, description, image,salesCompany) => {
+    setDialogConfig({ ...dialogConfig, title, description, image,salesCompany, open: true });
   };
 
   const handleCloseDialog = () => {
@@ -44,7 +45,7 @@ function Offers() {
         button
         key={sale.id}
         onClick={() =>
-          handleListClick(sale.title, sale.description, sale.image)
+          handleListClick(sale.title, sale.description, sale.image,sale.company)
         }
         classes={{ root: classes.root }}
       >
@@ -105,6 +106,7 @@ function Offers() {
         title={dialogConfig.title}
         image={dialogConfig.image}
         description={dialogConfig.description}
+        salesCompany={dialogConfig.salesCompany}
       />
     </>
   );

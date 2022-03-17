@@ -59,12 +59,45 @@ function SaleCardItem({
             style={{ textOverflow: "ellipsis", overflow: "hidden" }}
           >
             {imgSrc ? (
-              <img src={imgSrc} style={{ height: "30px", width: "30px" }} />
+              <img src={imgSrc} style={{ height: "100%", width: "100%" }} />
             ) : (
               <Avatar style={{ height: "30px", width: "30px" }} />
             )}
           </Grid>
-          {allSales && (
+          
+          <Grid
+            item
+            container
+            alignItems="center"
+            justifyContent="center"
+            xs={5}
+            style={{ textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            <div>
+              <Typography
+                variant="h6"
+                style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                className={classes.textFont}
+              >
+                <b>{title}</b>
+              </Typography>
+              <Typography
+                variant="body1"
+                style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                className={classes.textFont}
+              >
+                <i>{description}</i>
+              </Typography>
+            </div>
+          </Grid>
+          <Grid
+            item
+            container
+            alignItems="center"
+            justifyContent="center"
+            xs={3}
+          >
+            {allSales && (
             <Grid item xs={3} justifyContent="flex-end" alignItems="center">
               <Button
                 size="small"
@@ -79,29 +112,7 @@ function SaleCardItem({
               </Button>
             </Grid>
           )}
-          <Grid
-            item
-            container
-            alignItems="center"
-            justifyContent="center"
-            xs={2}
-            style={{ textOverflow: "ellipsis", overflow: "hidden" }}
-          >
-            <Typography
-              variant="h6"
-              style={{ overflow: "hidden", textOverflow: "ellipsis" }}
-              className={classes.textFont}
-            >
-              <b>{title}</b>
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            container
-            alignItems="center"
-            justifyContent="center"
-            xs={3}
-          >
+          
             <Typography variant="body1" className={classes.textFont}>
               {dateConfiguration(dateStart)} - {dateConfiguration(dateEnd)}
             </Typography>

@@ -7,5 +7,6 @@
     "Info":4,
     "Account":5
   },
-  "apiUrl": "https://localhost:4004/api"
+  "apiUrl": "https://localhost:4004/api",
+  "REACT_APP_GOOGLE_MAPS_API_KEY":"AIzaSyAt_x65lkmdSXWb6lDFO_9BpJyExi8sbGg"
 }
