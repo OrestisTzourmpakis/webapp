@@ -62,7 +62,7 @@ function RegisterForm({ handleClose }) {
         userName: username,
       });
       openSnackbar(
-        "Registared completed. A verifaction link was sent to your email address.",
+        "The registration completed. A verifaction link was sent to your email address.",
         false
       );
       handleClose();
@@ -77,7 +77,7 @@ function RegisterForm({ handleClose }) {
     <>
       <Paper className={classes.paperWrapper}>
         <Typography variant="h5" align="center">
-          Registeration
+          Registration
         </Typography>
         <form className={classes.root} onSubmit={handleSubmit}>
           <TextField

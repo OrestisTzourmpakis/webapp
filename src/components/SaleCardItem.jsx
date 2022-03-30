@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
   },
   companyName: {
     [theme.breakpoints.down("sm")]: {
-      fontSize: "5px",
+      fontSize: "15px",
     },
   },
   textFont: {
     [theme.breakpoints.down("sm")]: {
-      fontSize: "9px",
+      fontSize: "12px",
     },
   },
 }));
@@ -49,34 +49,50 @@ function SaleCardItem({
   return (
     <>
       <Paper className={classes.paperWrapper}>
+      
         <Grid container className={classes.cardWrapper}>
-          <Grid
+          
+        {imgSrc ? (
+        <Grid
             item
             container
             alignItems="center"
             justifyContent="center"
             xs={2}
-            style={{ textOverflow: "ellipsis", overflow: "hidden" }}
           >
-            {imgSrc ? (
-              <img src={imgSrc} style={{ height: "100%", width: "100%" }} />
-            ) : (
-              <Avatar style={{ height: "30px", width: "30px" }} />
-            )}
+            <img src={imgSrc} style={{ width: "100%" }} />
           </Grid>
-          
+        ) :""
+        }
           <Grid
             item
             container
             alignItems="center"
             justifyContent="center"
-            xs={5}
+            xs={7}
             style={{ textOverflow: "ellipsis", overflow: "hidden" }}
+
+
           >
-            <div>
+            <div style={{ textOverflow: "ellipsis", overflow: "hidden",padding:"5px" }}>
+            {allSales && (
+            <Grid item xs={12} justifyContent="center" alignItems="center">
+              <Button
+                size="small"
+                variant="outlined"
+                color="primary"
+                startIcon={<Business />}
+                onClick={() => navigate(`/companies/${company.id}`)}
+              >
+                <Typography className={classes.companyName} variant="subtitle2">
+                  {company?.name}
+                </Typography>
+              </Button>
+            </Grid>
+          )}
               <Typography
                 variant="h6"
-                style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                style={{ textOverflow: "ellipsis", overflow: "hidden" }}
                 className={classes.textFont}
               >
                 <b>{title}</b>
@@ -97,25 +113,15 @@ function SaleCardItem({
             justifyContent="center"
             xs={3}
           >
-            {allSales && (
-            <Grid item xs={3} justifyContent="flex-end" alignItems="center">
-              <Button
-                size="small"
-                variant="outlined"
-                color="primary"
-                startIcon={<Business />}
-                onClick={() => navigate(`/companies/${company.id}`)}
-              >
-                <Typography className={classes.companyName} variant="subtitle2">
-                  {company?.name}
-                </Typography>
-              </Button>
-            </Grid>
-          )}
-          
+            <div style={{textAlign:"center",margin:"auto"}}>
+            
+            <Typography variant="h6" className={classes.textFont}>
+            Διάρκεια:
+            </Typography>
             <Typography variant="body1" className={classes.textFont}>
               {dateConfiguration(dateStart)} - {dateConfiguration(dateEnd)}
             </Typography>
+            </div>
           </Grid>
 
           <Grid xs item container alignItems="center" justifyContent="flex-end">

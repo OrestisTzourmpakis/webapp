@@ -22,7 +22,7 @@ function Points() {
   }, [authed]);
   return (
     <>
-      <PointsContent data={data} title="User Points Per Company" />
+      <PointsContent data={data} title="Πόντοι Ανα Επιχείρηση" />
     </>
   );
 }

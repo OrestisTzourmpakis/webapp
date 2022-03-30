@@ -5,7 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import _ from "lodash";
 
 function ListWithPagination({ data, listItem, searchKeys }) {
-  const itemPerPage = 3;
+  const itemPerPage = 20;
   const [page, setPage] = useState(1);
   const [filtered, setFiltered] = useState(data);
   const [search, setSearch] = useState("");

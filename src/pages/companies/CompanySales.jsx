@@ -82,12 +82,10 @@ function CompanySales() {
   const listBody = (sale) => {
     return (
       <ListItem
+
         button
         key={sale.id}
         onClick={() =>{
-          console.log(sale.company);
-          console.log(sale.title);
-          console.log(sale.description);
           handleListClick(sale.title, sale.description, sale.image,sale.company);
 
           }
@@ -97,6 +95,7 @@ function CompanySales() {
         <SaleCardItem
           title={sale.title}
           dateEnd={sale.dateEnd}
+          imgSrc={sale.image}
           company={sale.company}
           dateStart={sale.dateStart}
           description={sale.description}
@@ -109,7 +108,7 @@ function CompanySales() {
     <>
       <Grid container>
         <Grid item xs={12}>
-          <Container maxWidth="lg">
+          <Container maxWidth="lg" >
             <ListWithPagination
               data={sales}
               listItem={listBody}

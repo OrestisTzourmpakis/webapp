@@ -93,16 +93,16 @@ function ContactForm() {
                 >
                   <Box display="flex" flexDirection="column">
                     <Typography style={{ color: "white" }} variant="h5">
-                      Get in touch
+                      Επικοινωνία
                     </Typography>
                     <Typography
                       variant="body1"
                       style={{ color: "white", marginTop: "20px" }}
                     >
-                      Send us an email regarding any issue.
+                      Στείλτε μας μήνυμα για οποιοδήποτε θέμα αντιμετωπίσετε.
                     </Typography>
                     <MessageTextField
-                      label="Topic"
+                      label="Θέμα"
                       style={{ marginTop: "20px" }}
                       className={classes.margin}
                       variant="filled"
@@ -113,7 +113,7 @@ function ContactForm() {
                     />
                     <MessageTextField
                       style={{ marginTop: "20px", marginBottom: "20px" }}
-                      label="Message"
+                      label="Μήνυμα"
                       className={classes.margin}
                       variant="filled"
                       multiline
@@ -130,7 +130,7 @@ function ContactForm() {
                         type="submit"
                         endIcon={<Send />}
                       >
-                        Send
+                        Αποστολη
                       </Button>
                     </Box>
                   </Box>

@@ -14,32 +14,25 @@ function BodyHowTo() {
     <>
       <Container>
         <Grid container spacing={8}>
-          <Grid item md={4} lg={3} xs={12}>
-            <BodyHowToItem
-              Icon={<Face style={{ color: "#302b27", fontSize: "50px" }} />}
-              title="Create Account"
-              body="Create an account in order to gain access to all our services."
-            />
-          </Grid>
-          <Grid item md={4} lg={3} xs={12}>
+          <Grid item md={4} lg={4} xs={12}>
             <BodyHowToItem
               Icon={<ShoppingCart style={{ fontSize: "50px" }} />}
-              title="Buy products"
-              body="Buy products from our already registered companies."
+              title="Αγοράστε Προϊόντα"
+              body="Αγοράστε προϊόντα από τα εγγεγραμμένα καταστήματα μας."
             />
           </Grid>
-          <Grid item md={4} lg={3} xs={12}>
+          <Grid item md={4} lg={4} xs={12}>
             <BodyHowToItem
               Icon={<EuroSymbol style={{ fontSize: "50px" }} />}
-              title="Earn points"
-              body="After every transcation you will earn some points depend on the corresponding company policy."
+              title="Κερδίστε Πόντους"
+              body="Μετά από κάθε συναλλαγή θα κερδίζετε πόντους ανάλογα με την αντίστοιχη πολιτική της επιχείρησης."
             />
           </Grid>
-          <Grid item md={4} lg={3} xs={12}>
+          <Grid item md={4} lg={4} xs={12}>
             <BodyHowToItem
               Icon={<Redeem style={{ fontSize: "50px" }} />}
-              title="Redeem points"
-              body="Redeem your points and get some exciting rewards!"
+              title="Εξαργυρώστε Πόντους"
+              body="Εξαργυρώστε τους πόντους σας και κερδίστε οικονομικότερες αγορές!"
             />
           </Grid>
         </Grid>

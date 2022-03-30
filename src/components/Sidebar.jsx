@@ -165,7 +165,7 @@ function Sidebar() {
               [classes.drawerText]: !homeActive && tab !== config.tabs.Home,
             })}
           >
-            <Typography variant="body1">Home</Typography>
+            <Typography variant="body1">Αρχική</Typography>
           </ListItemText>
         </ListItemCustom>
         <ListItemCustom
@@ -189,7 +189,7 @@ function Sidebar() {
                 !companiesActive && tab !== config.tabs.Companies,
             })}
           >
-            <Typography variant="body1">Companies</Typography>
+            <Typography variant="body1">Καταστήματα</Typography>
           </ListItemText>
         </ListItemCustom>
 
@@ -213,7 +213,7 @@ function Sidebar() {
               [classes.drawerText]: !offersActive && tab !== config.tabs.Offers,
             })}
           >
-            <Typography variant="body1">Offers</Typography>
+            <Typography variant="body1">Προσφορές</Typography>
           </ListItemText>
         </ListItemCustom>
 
@@ -237,7 +237,7 @@ function Sidebar() {
               [classes.drawerText]: !pointsActive && tab !== config.tabs.Points,
             })}
           >
-            <Typography variant="body1">Points</Typography>
+            <Typography variant="body1">Πόντοι</Typography>
           </ListItemText>
         </ListItemCustom>
 
@@ -261,7 +261,7 @@ function Sidebar() {
               [classes.drawerText]: !infoActive && tab !== config.tabs.Info,
             })}
           >
-            <Typography variant="body1">Info</Typography>
+            <Typography variant="body1">Πληροφορίες</Typography>
           </ListItemText>
         </ListItemCustom>
       </List>

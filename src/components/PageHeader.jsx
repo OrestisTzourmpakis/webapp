@@ -4,8 +4,8 @@ import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   pageCard: {
-    padding: "15px",
-    marginRight: "25px",
+    padding: "25px",
+    marginRight: "15px",
     marginBottom: "15px",
   },
   pageCardSubTitle: {
@@ -28,7 +28,7 @@ function PageHeader({ title, subTitle, children }) {
           flexDirection="column"
           justifyContent="center"
         >
-          <Typography variant="h5">{title}</Typography>
+          <Typography variant="h6">{title}</Typography>
           {subTitle && (
             <Typography
               variant="subtitle1"

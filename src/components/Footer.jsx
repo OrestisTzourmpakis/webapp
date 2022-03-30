@@ -58,13 +58,7 @@ function Footer() {
                     style={{ height: "100%" }}
                   >
                     <IconButton className={classes.socialIcons}>
-                      <Language />
-                    </IconButton>
-                    <IconButton className={classes.socialIcons}>
-                      <Instagram />
-                    </IconButton>
-                    <IconButton className={classes.socialIcons}>
-                      <Facebook />
+                      <a href="https://loyaltylevadeon.gr/loyalty/" style={{color:"white"}}><Language /> Loyalty Program</a>
                     </IconButton>
                   </Box>
                 </Box>
@@ -78,13 +72,13 @@ function Footer() {
                     style={{ color: "white", marginLeft: "15px" }}
                     variant="subtitle1"
                   >
-                    Λειβαδια Loayalty
+                    Πλατφόρμα Loyalty
                   </Typography>
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <Typography style={{ color: "white" }}>
-                  Terms and Conditions | Privacy Policy
+                  <a href="https://loyaltylevadeon.gr/%cf%80%ce%bf%ce%bb%ce%b9%cf%84%ce%b9%ce%ba%ce%ae-%ce%b1%cf%80%ce%bf%cf%81%cf%81%ce%ae%cf%84%ce%bf%cf%85/" style={{color:"white"}}>Terms and Conditions | Privacy Policy</a>
                 </Typography>
               </Grid>
             </Grid>

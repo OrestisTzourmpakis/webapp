@@ -29,8 +29,8 @@ function PointsContent({ data, title, history }) {
   const classes = useStyles();
   const navigate = useNavigate();
   return (
-    <Container>
-      <Grid container>
+    <Container >
+      <Grid container >
         <Grid
           item
           container
@@ -42,12 +42,12 @@ function PointsContent({ data, title, history }) {
             <b>{title}</b>
           </Typography>
         </Grid>
-        <Grid item container>
-          <Container>
+        <Grid item container >
+          <Container style={{padding:"0px",margin:"0px"}}>
             {data?.length > 0 ? (
               <List>
                 {data?.map((elem) => (
-                  <ListItem key={elem.id} className={classes.listItem}>
+                  <ListItem key={elem.id} className={classes.listItem}  style={{padding:"0px",marginTop:"0px"}}>
                     {/* <ListItemText>
                       <Typography variant="body">
                         {elem?.company?.name}
@@ -57,16 +57,19 @@ function PointsContent({ data, title, history }) {
                       <Typography variant="h5">{elem?.total}</Typography>
                     </ListItemSecondaryAction> */}
                     <Box
-                      style={{ width: "100%" }}
+                      style={{ width: "100%"}}
                       display="flex"
                       alignItems="center"
                       justifyContent="space-between"
+                      
+
                     >
                       <Button
                         size="small"
                         variant="outlined"
                         color="primary"
                         startIcon={<Business />}
+                        style={{textAlign:"left",marginRight:"20px"}}
                         onClick={() =>
                           navigate(`/companies/${elem?.company?.id}`)
                         }

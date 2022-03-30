@@ -45,17 +45,17 @@ function Body() {
     <Container>
       <Grid container spacing={10} style={{ marginTop: "0px" }}>
         <Grid item md={4} xs={12}>
-          <BodyItem title={`${calculateTotal(totalUsers)} registered users`}>
+          <BodyItem title={`100+ χρήστες`}>
             <Group style={{ fontSize: "50px" }} />
           </BodyItem>
         </Grid>
-        <Grid item md={4} xs={12}>
-          <BodyItem title={`Over ${calculateTotal(totalCompanies)} companies`}>
+        <Grid item md={5} xs={12}>
+          <BodyItem title={`90+ καταστήματα`}>
             <Business style={{ fontSize: "50px" }} />
           </BodyItem>
         </Grid>
-        <Grid item md={4} xs={12}>
-          <BodyItem title={`${calculateTotal(totalActiveSales)} Active Sales`}>
+        <Grid item md={3} xs={12}>
+          <BodyItem title={`50+ προσφορές`}>
             <AttachMoney style={{ fontSize: "50px" }} />
           </BodyItem>
         </Grid>

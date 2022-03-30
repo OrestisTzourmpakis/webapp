@@ -103,7 +103,7 @@ function PointsPage() {
                       [classes.listItemTextActive]: 0 === menuIndex,
                       [classes.listItemTextDisable]: 0 !== menuIndex,
                     })}
-                    primary="Points"
+                    primary="Πόντοι"
                   />
                 </ListItem>
                 <ListItem
@@ -124,14 +124,14 @@ function PointsPage() {
                       [classes.listItemTextActive]: 1 === menuIndex,
                       [classes.listItemTextDisable]: 1 !== menuIndex,
                     })}
-                    primary="Points History"
+                    primary="Ιστορικό Πόντων"
                   />
                 </ListItem>
               </List>
             </Paper>
           </Grid>
-          <Grid item md={9} xs={12}>
-            <Paper className={classes.paperWrapper}>{contentRenderer()}</Paper>
+          <Grid item md={9} xs={12} >
+            <Paper className={classes.paperWrapper} style={{padding:"0px",margin:"0px"}}>{contentRenderer()} </Paper>
           </Grid>
         </Grid>
       </Container>

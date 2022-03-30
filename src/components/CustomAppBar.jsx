@@ -5,6 +5,7 @@ import {
   makeStyles,
   Menu,
   MenuItem,
+  Typography,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
@@ -14,8 +15,8 @@ import AccountDialog from "./AccountDialog";
 
 const useStyles = makeStyles((theme) => ({
   imgAppBar: {
-    width: "230px",
-    height: "230px",
+    width: "100px",
+    height: "100px",
   },
 }));
 
@@ -75,8 +76,9 @@ function CustomAppBar() {
         >
           <div></div>
           <img
-            src={process.env.PUBLIC_URL + "/loyalty_header3.png"}
+            src={process.env.PUBLIC_URL + "/logo.png"}
             className={classes.imgAppBar}
+
           />
           <IconButton
             aria-label="account"

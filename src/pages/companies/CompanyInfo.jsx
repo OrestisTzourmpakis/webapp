@@ -48,6 +48,7 @@ function CompanyInfo() {
       // call the api
       // const { data } = await getCompanyById(companyId);
       // success get the data of the company!!!
+      console.log(company);
       setCompanyModel({
         pointsEuro: company.pointsToEuroRatio,
         euroPoints: company.euroToPointsRatio,
@@ -56,6 +57,7 @@ function CompanyInfo() {
         twitter: company.twitter,
         website: company.website,
         name: company.name,
+        logo: company.logo
       });
       //console.log("Ta data!!!", data);
     };
@@ -84,7 +86,7 @@ function CompanyInfo() {
                     variant="body1"
                     style={{ color: "#d4d2d1" }}
                   >
-                    Name
+                    Επωνυμία
                   </Typography>
                   <Typography variant="h6">
                     <b>{companyModel.name}</b>

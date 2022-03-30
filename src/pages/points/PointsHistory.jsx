@@ -19,7 +19,7 @@ function PointsHistory() {
   }, []);
   return (
     <>
-      <PointsContent data={data} title="User's Points History" history={true} />
+      <PointsContent data={data} title="Ιστορικό Πόντων" history={true} />
     </>
   );
 }

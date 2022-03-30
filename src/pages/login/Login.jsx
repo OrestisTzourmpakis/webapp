@@ -1,12 +1,16 @@
-import { Box, Button, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Box, Button, makeStyles, Paper, Typography, Modal,TextField } from "@material-ui/core";
 import { Lock, Person } from "@material-ui/icons";
 import React, { useContext, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoginCustomInput from "../../components/LoginCustomInput";
 import ModalDialog from "../../components/ModalDialog";
 import { UserContext } from "../../contexts/UserContext";
-import { authenticateUser } from "../../services/userService";
+import { authenticateUser,requestResetPassword } from "../../services/userService";
 import { handleErrors } from "../../utils/handleErrors.js";
+import config from "../../config.json";
+
+
+
 const useStyles = makeStyles((theme) => ({
   boxWrapper: {
     height: "100vh",
@@ -14,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     opacity: "0.7",
     justifyContent: "center",
     alignItems: "center",
+    flexDirection:"column"
   },
   loginPageWrapper: {
     width: "700px",
@@ -66,6 +71,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+
 function Login() {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
@@ -77,6 +96,22 @@ function Login() {
   const { userLogin, authed } = useContext(UserContext);
   const classes = useStyles();
   let navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+  const [forgotPassRespond, setForgotPassRespond] = useState("");
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [googleSignInUrl, setGoogleSignInUrl] = useState("");
+
+  const handleResetPassword = () => {
+    handleOpenModal();
+  };
+
+  const handleResetPasswordButton = async () => {
+    const result = await requestResetPassword(forgotEmail);
+    setForgotPassRespond("A reset email was send. Check your emails ");
+  }
+
 
   const handleLoginClick = async () => {
     try {
@@ -102,10 +137,13 @@ function Login() {
   useEffect(() => {
     const Init = async () => {
       try {
+        var server = config.apiUrl;
+        var controllerGoogleSignIn = "/useraccount/googlelogin";
+        setGoogleSignInUrl(server+controllerGoogleSignIn);
         const result = await authenticateUser();
         if (result.roles.length !== 0) return;
         navigate("/");
-      } catch (ex) {}
+      } catch (ex) { }
 
       if (location.state === null) return;
 
@@ -126,13 +164,17 @@ function Login() {
   return (
     <>
       <Box display="flex" className={classes.boxWrapper}>
+        <h1 style={{color:"#4c4cfd", marginBottom:"100px"}}>Είσοδος για καταναλωτές</h1>
         <Paper elevation={3} className={classes.loginPageWrapper}>
+        
           <Person className={classes.personIcon} />
+          
           <Box
             display="flex"
             flexDirection="column"
             className={classes.loginFormWrapper}
           >
+            
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -197,7 +239,7 @@ function Login() {
                 className="googleForm"
                 method="GET"
                 //window.location.origin.toString()
-                action={`https://localhost:4004/api/useraccount/googlelogin`}
+                action={googleSignInUrl}
               >
                 <input
                   type="hidden"
@@ -229,12 +271,49 @@ function Login() {
                     <Typography variant="body1">Sign in with Google</Typography>
                   </Button>
                 </Box>
+                <Box display="flex" justifyContent="center">
+                  <Button
+                    onClick={handleResetPassword}
+                    style={{ marginTop: "20px" }}
+                    color="primary"
+                  >
+                    Reset Password
+                  </Button>
+                </Box>
               </form>
             </Box>
           </Box>
         </Paper>
       </Box>
       <ModalDialog open={registerFormOpen} handleClose={handleClose} />
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            RESET PASSWORD
+          </Typography>
+          <TextField
+            id="outlined-required"
+            label="Email"
+            onChange={(e) => setForgotEmail(e.currentTarget.value)}
+            value={forgotEmail}
+          />
+          <Button
+            onClick={handleResetPasswordButton}
+            style={{ marginTop: "20px" }}
+            color="primary"
+          >
+            Reset Password
+          </Button>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {forgotPassRespond}
+          </Typography>
+        </Box>
+      </Modal>
     </>
   );
 }

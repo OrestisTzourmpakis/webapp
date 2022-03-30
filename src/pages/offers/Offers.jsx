@@ -51,6 +51,7 @@ function Offers() {
       >
         <SaleCardItem
           title={sale.title}
+          description = {sale.description}
           dateEnd={sale.dateEnd}
           allSales={true}
           imgSrc={sale.image}
@@ -87,7 +88,7 @@ function Offers() {
                 flexDirection="column"
                 style={{ marginBottom: "50px" }}
               >
-                <PageHeader title="Offers" subTitle="List of all active offers">
+                <PageHeader title="Προσφορές" subTitle="Λίστα προσφορών">
                   <Loyalty fontSize="large" />
                 </PageHeader>
                 <ListWithPagination

@@ -34,7 +34,7 @@ function SearchBar({ value, setValue }) {
       <Box display="flex" alignItems="center">
         <Search style={{ color: "#767676" }} fontSize="medium" />
         <input
-          placeholder="Search..."
+          placeholder="Αναζήτηση..."
           className={classes.searchInput}
           value={value}
           onChange={(e) => setValue(e.currentTarget.value)}

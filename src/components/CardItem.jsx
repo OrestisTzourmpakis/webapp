@@ -63,22 +63,16 @@ function CardItem({
       <CardHeader avatar={<Avatar src={logo} />} title={name}></CardHeader>
       <CardContent className={classes.cardContent}>
         <Grid container>
-          <Grid item xs={4}>
-            <Grid container alignItems="center" direction="column">
-              <Typography variant="h5">{companyUsersCount}</Typography>
-              <Typography variant="subtitle1">Registered Users</Typography>
-            </Grid>
-          </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Grid container alignItems="center" direction="column">
               <Typography variant="h5">{companySalesCount}</Typography>
-              <Typography variant="subtitle1">Active Sales</Typography>
+              <Typography variant="subtitle1">Προσφορές</Typography>
             </Grid>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Grid container alignItems="center" direction="column">
               <Typography variant="h5">{companyStoresCount}</Typography>
-              <Typography variant="subtitle1">Stores</Typography>
+              <Typography variant="subtitle1">Υποκαταστήματα</Typography>
             </Grid>
           </Grid>
         </Grid>

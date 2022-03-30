@@ -47,31 +47,31 @@ function BottomNavigationCustom() {
         <BottomNavigationAction
           classes={{ root: classes.bottomNavigationRoot }}
           onClick={() => navigate("/")}
-          label="Home"
+          label="Αρχική"
           icon={<Home />}
         />
         <BottomNavigationAction
           classes={{ root: classes.bottomNavigationRoot }}
           onClick={() => navigate("/companies")}
-          label="Companies"
+          label="Καταστήματα"
           icon={<Business />}
         />
         <BottomNavigationAction
           classes={{ root: classes.bottomNavigationRoot }}
           onClick={() => navigate("/offers")}
-          label="Offers"
+          label="Προσφορές"
           icon={<Loyalty />}
         />
         <BottomNavigationAction
           classes={{ root: classes.bottomNavigationRoot }}
           onClick={() => navigate("/points")}
-          label="Points"
+          label="Πόντοι"
           icon={<MonetizationOn />}
         />
         <BottomNavigationAction
           classes={{ root: classes.bottomNavigationRoot }}
           onClick={() => navigate("/info")}
-          label="Info"
+          label="Πληροφορίες"
           icon={<Info />}
         />
       </BottomNavigation>

@@ -9,7 +9,11 @@ import {
   Tab,
   Tabs,
   Typography,
+  Link
 } from "@material-ui/core";
+import {
+  Language
+} from "@material-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import PropTypes from "prop-types";
@@ -91,7 +95,7 @@ function CompanyDetails() {
 
   return (
     <>
-      <Container style={{ paddingTop: "50px" }}>
+      <Container style={{ padding: "0px" }}>
         <Grid container>
           <Grid item xs>
             <Container>
@@ -101,7 +105,18 @@ function CompanyDetails() {
                 </IconButton>
                 <PageHeader title={company?.name}>
                   <Avatar src={company?.logo} />
+                  
                 </PageHeader>
+                {
+                  (company?.website != null) 
+                  ?
+                  <div style={{padding:"5px"}}>
+                  <Language fontSize="small" style={{paddingTop:"5px"}}/>
+                  <Link href={"https://"+company?.website} style={{color:"black"}}>Ιστοσελίδα Καταστήματος</Link>
+                  </div>
+                  :
+                  ""
+                }
                 <AppBar position="static" color="default">
                   <Tabs
                     value={value}
@@ -110,10 +125,11 @@ function CompanyDetails() {
                     textColor="primary"
                     variant="fullWidth"
                     aria-label="full width tabs example"
+                    
                   >
-                    <Tab label="Stores" {...allyProps(0)} />
-                    <Tab label="Offers" {...allyProps(1)} />
-                    <Tab label="Info" {...allyProps(2)} />
+                    <Tab label="Υποκαταστηματα" {...allyProps(0)} />
+                    <Tab label="Προσφορες" {...allyProps(1)} />
+                    {/* <Tab label="Πληροφοριες" {...allyProps(2)} /> */}
                   </Tabs>
                 </AppBar>
                 <SwipeableViews
@@ -126,7 +142,7 @@ function CompanyDetails() {
                       <CompanyStores />
                     </div>
                   </TabPanel>
-                  <TabPanel value={value} index={1} dir={theme.direction}>
+                  <TabPanel value={value} index={1} dir={theme.direction} >
                     <div>
                       <CompanySales />
                     </div>

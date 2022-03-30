@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     transform: "translate(-50%, -50%)",
     textAlign: "center",
   },
+  buttonStyle:{
+    margin:"5px"
+  }
 }));
 
 function Header() {
@@ -33,18 +36,20 @@ function Header() {
           display="flex"
           flexDirection="column"
         >
-          <Typography variant="h4">Welcome to Loayalty Platform</Typography>
+          <Typography variant="h4">Καλώς ορίσατε στην Πλατφόρμα Loyalty</Typography>
           <Typography variant="body1" style={{ marginTop: "10px" }}>
-            Take advantage of the current active offers, earn and redeem your
-            points to get rewards.
+            Επωφεληθείτε από τις τρέχουσες ενεργές προσφορές, κερδίστε και εξαργυρώστε τους πόντους σας για να λάβετε ανταμοιβές.
           </Typography>
           <Box
             display="flex"
             justifyContent="center"
             style={{ marginTop: "10px" }}
           >
-            <Button variant="contained" onClick={() => navigate("/offers")}>
-              Check Offers
+            <Button variant="contained" onClick={() => navigate("/offers")} className={classes.buttonStyle}>
+              Προσφορες
+            </Button>
+            <Button variant="contained" onClick={() => navigate("/points")} className={classes.buttonStyle}>
+              Οι πoντοι μου
             </Button>
           </Box>
         </Box>

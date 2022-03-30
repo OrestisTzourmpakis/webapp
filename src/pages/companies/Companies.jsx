@@ -90,7 +90,7 @@ function Companies() {
                 flexDirection="column"
                 style={{ marginBottom: "50px" }}
               >
-                <PageHeader title="Companies" subTitle="List of companies">
+                <PageHeader title="Καταστήματα" subTitle="Λίστα καταστημάτων">
                   <Business fontSize="large" />
                 </PageHeader>
                 <ListWithPagination
