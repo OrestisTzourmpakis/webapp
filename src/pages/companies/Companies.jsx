@@ -10,17 +10,26 @@ import {
   Grid,
   List,
   ListItem,
+  Paper,
   makeStyles,
+  Typography,
+  Checkbox,
+  Modal,
+  Button,
+  Fab,
+  Tooltip,
 } from "@material-ui/core";
 import PageHeader from "../../components/PageHeader";
 import CardItem from "../../components/CardItem";
 import { useNavigate } from "react-router-dom";
-import { Business } from "@material-ui/icons";
+import { Business, Tune } from "@material-ui/icons";
 import { getAllCompanies } from "../../services/companyService";
 import SearchBar from "../../components/SearchBar";
 import { companiesData } from "../../services/dummyData";
 import Pagination from "@material-ui/lab/Pagination";
 import ListWithPagination from "../../components/ListWithPagination";
+import { getCategories } from "../../services/categoriesService";
+import FilterBox from "../../utils/filterBox";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,15 +41,50 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "0px",
     paddingRight: "0px",
   },
+  filterButton: {
+    position: "absolute",
+    top: "90%",
+    left: "90%",
+    transform: "translate(-50%, -50%)",
+    [theme.breakpoints.up("lg")]: {
+      display: "none",
+    },
+  },
 }));
 
 function Companies() {
   const classes = useStyles();
   const { changeTab } = useContext(TabContext);
   const [companies, setCompanies] = useState([]);
+  const [companiesFilter, setCompaniesFilter] = useState([]);
+  const [openFilterModal, setOpenFilterModal] = useState(false);
+  const [categories, setCategories] = useState([
+    {
+      id: "all",
+      name: "All",
+      checked: true,
+    },
+  ]);
   const itemPerPage = 3;
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
+  useEffect(() => {
+    const Init = async () => {
+      try {
+        const { data } = await getCategories();
+        let categoryWithChecked = data.map((model) => {
+          return { ...model, checked: false };
+        });
+        let allValue = {
+          id: "all",
+          name: "All",
+          checked: true,
+        };
+        setCategories([allValue, ...categoryWithChecked]);
+      } catch (ex) {}
+    };
+    Init();
+  }, []);
 
   const handleChange = (event, value) => setPage(value);
 
@@ -66,24 +110,44 @@ function Companies() {
 
   useEffect(() => {
     changeTab(config.tabs.Companies);
+    console.log("run");
     const Init = async () => {
       try {
         const { data } = await getAllCompanies();
-        //const data = companiesData();
         setCompanies(data);
+        setCompaniesFilter(data);
       } catch (ex) {}
     };
     Init();
   }, []);
 
+  const handleOpen = () => {
+    setOpenFilterModal(true);
+  };
+
+  const handleClose = () => setOpenFilterModal(false);
+
   return (
     <>
-      {/* <div
-        style={{ height: "200px", width: "100%", backgroundColor: "red" }}
-      ></div> */}
       <Container style={{ paddingTop: "50px" }}>
+        <Box className={classes.filterButton}>
+          <Tooltip title="filter">
+            <Fab color="primary" onClick={handleOpen}>
+              <Tune />
+            </Fab>
+          </Tooltip>
+        </Box>
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={2}>
+            <FilterBox
+              initialList={companies}
+              setFilterList={setCompaniesFilter}
+              idString="categoryId"
+              categories={categories}
+              setCategories={setCategories}
+            />
+          </Grid>
+          <Grid item xs={10}>
             <Container maxWidth="md">
               <Box
                 display="flex"
@@ -94,7 +158,7 @@ function Companies() {
                   <Business fontSize="large" />
                 </PageHeader>
                 <ListWithPagination
-                  data={companies}
+                  data={companiesFilter}
                   listItem={listBody}
                   searchKeys={["name"]}
                 />
@@ -103,6 +167,18 @@ function Companies() {
           </Grid>
         </Grid>
       </Container>
+      <Modal open={openFilterModal} onClose={handleClose}>
+        <Container>
+          <FilterBox
+            initialList={companies}
+            setFilterList={setCompaniesFilter}
+            idString="categoryId"
+            categories={categories}
+            setCategories={setCategories}
+            mobile={true}
+          />
+        </Container>
+      </Modal>
     </>
   );
 }

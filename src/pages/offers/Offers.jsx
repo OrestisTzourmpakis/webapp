@@ -1,5 +1,14 @@
-import { Box, Container, Grid, ListItem, makeStyles } from "@material-ui/core";
-import { Loyalty } from "@material-ui/icons";
+import {
+  Box,
+  Container,
+  Fab,
+  Grid,
+  ListItem,
+  makeStyles,
+  Modal,
+  Tooltip,
+} from "@material-ui/core";
+import { Loyalty, Tune } from "@material-ui/icons";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomDialog from "../../components/CustomDialog";
@@ -8,7 +17,9 @@ import PageHeader from "../../components/PageHeader";
 import SaleCardItem from "../../components/SaleCardItem";
 import config from "../../config.json";
 import { TabContext } from "../../contexts/TabContext";
+import { getCategories } from "../../services/categoriesService";
 import { getAllActiveSales } from "../../services/salesService";
+import FilterBox from "../../utils/filterBox";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,10 +30,28 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "5px",
     cursor: "pointer",
   },
+  filterButton: {
+    position: "absolute",
+    top: "90%",
+    left: "90%",
+    transform: "translate(-50%, -50%)",
+    [theme.breakpoints.up("lg")]: {
+      display: "none",
+    },
+  },
 }));
 function Offers() {
   const { changeTab } = useContext(TabContext);
   const [offers, setOffers] = useState([]);
+  const [offersFilter, setOffersFilter] = useState([]);
+  const [openFilterModal, setOpenFilterModal] = useState(false);
+  const [categories, setCategories] = useState([
+    {
+      id: "all",
+      name: "All",
+      checked: true,
+    },
+  ]);
   const classes = useStyles();
   const navigate = useNavigate();
   const [dialogConfig, setDialogConfig] = useState({
@@ -30,10 +59,36 @@ function Offers() {
     title: "",
     description: "",
     image: null,
-    salesCompany:null
+    salesCompany: null,
   });
-  const handleListClick = (title, description, image,salesCompany) => {
-    setDialogConfig({ ...dialogConfig, title, description, image,salesCompany, open: true });
+
+  useEffect(() => {
+    const Init = async () => {
+      try {
+        const { data } = await getCategories();
+        let categoryWithChecked = data.map((model) => {
+          return { ...model, checked: false };
+        });
+        let allValue = {
+          id: "all",
+          name: "All",
+          checked: true,
+        };
+        setCategories([allValue, ...categoryWithChecked]);
+      } catch (ex) {}
+    };
+    Init();
+  }, []);
+
+  const handleListClick = (title, description, image, salesCompany) => {
+    setDialogConfig({
+      ...dialogConfig,
+      title,
+      description,
+      image,
+      salesCompany,
+      open: true,
+    });
   };
 
   const handleCloseDialog = () => {
@@ -45,13 +100,18 @@ function Offers() {
         button
         key={sale.id}
         onClick={() =>
-          handleListClick(sale.title, sale.description, sale.image,sale.company)
+          handleListClick(
+            sale.title,
+            sale.description,
+            sale.image,
+            sale.company
+          )
         }
         classes={{ root: classes.root }}
       >
         <SaleCardItem
           title={sale.title}
-          description = {sale.description}
+          description={sale.description}
           dateEnd={sale.dateEnd}
           allSales={true}
           imgSrc={sale.image}
@@ -71,17 +131,41 @@ function Offers() {
       try {
         const { data } = await getAllActiveSales();
         setOffers(data);
+        setOffersFilter(data);
       } catch (ex) {
         console.log(ex);
       }
     };
     Init();
   }, []);
+
+  const handleOpen = () => {
+    setOpenFilterModal(true);
+  };
+
+  const handleClose = () => setOpenFilterModal(false);
+
   return (
     <>
       <Container style={{ paddingTop: "50px" }}>
+        <Box className={classes.filterButton}>
+          <Tooltip title="filter">
+            <Fab color="primary" onClick={handleOpen}>
+              <Tune />
+            </Fab>
+          </Tooltip>
+        </Box>
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={2}>
+            <FilterBox
+              initialList={offers}
+              setFilterList={setOffersFilter}
+              idString="company.categoryId"
+              categories={categories}
+              setCategories={setCategories}
+            />
+          </Grid>
+          <Grid item xs={10}>
             <Container maxWidth="md">
               <Box
                 display="flex"
@@ -92,7 +176,7 @@ function Offers() {
                   <Loyalty fontSize="large" />
                 </PageHeader>
                 <ListWithPagination
-                  data={offers}
+                  data={offersFilter}
                   listItem={listBody}
                   searchKeys={["title", "company.name"]}
                 />
@@ -109,6 +193,18 @@ function Offers() {
         description={dialogConfig.description}
         salesCompany={dialogConfig.salesCompany}
       />
+      <Modal open={openFilterModal} onClose={handleClose}>
+        <Container>
+          <FilterBox
+            initialList={offers}
+            setFilterList={setOffersFilter}
+            idString="company.categoryId"
+            categories={categories}
+            setCategories={setCategories}
+            mobile={true}
+          />
+        </Container>
+      </Modal>
     </>
   );
 }
