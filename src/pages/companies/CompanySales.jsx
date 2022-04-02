@@ -60,10 +60,17 @@ function CompanySales() {
     title: "",
     description: "",
     image: null,
-    salesCompany: null
+    salesCompany: null,
   });
-  const handleListClick = (title, description, image,salesCompany) => {
-    setDialogConfig({ ...dialogConfig, title, description, image,salesCompany, open: true});
+  const handleListClick = (title, description, image, salesCompany) => {
+    setDialogConfig({
+      ...dialogConfig,
+      title,
+      description,
+      image,
+      salesCompany,
+      open: true,
+    });
   };
 
   const handleCloseDialog = () => {
@@ -79,17 +86,28 @@ function CompanySales() {
     Init();
   }, [company]);
 
+  // const getSaleCompanyCategory = (sale) => {
+  //   if (sale?.company?.categoryId === null) {
+  //     return "Καμία";
+  //   } else {
+  //     var category = categories.find((c) => c.id === sale?.company.categoryId);
+  //     return category.name;
+  //   }
+  // };
+
   const listBody = (sale) => {
     return (
       <ListItem
-
         button
         key={sale.id}
-        onClick={() =>{
-          handleListClick(sale.title, sale.description, sale.image,sale.company);
-
-          }
-        }
+        onClick={() => {
+          handleListClick(
+            sale.title,
+            sale.description,
+            sale.image,
+            sale.company
+          );
+        }}
         classes={{ root: classes.listItem }}
       >
         <SaleCardItem
@@ -99,6 +117,7 @@ function CompanySales() {
           company={sale.company}
           dateStart={sale.dateStart}
           description={sale.description}
+          category={sale.category === null ? "Καμία" : sale.category}
         />
       </ListItem>
     );
@@ -108,12 +127,11 @@ function CompanySales() {
     <>
       <Grid container>
         <Grid item xs={12}>
-          <Container maxWidth="lg" >
+          <Container maxWidth="lg">
             <ListWithPagination
               data={sales}
               listItem={listBody}
               searchKeys={["title"]}
-            
             />
           </Container>
         </Grid>
