@@ -1,4 +1,13 @@
-import { Box, Checkbox, Paper, Typography } from "@material-ui/core";
+import {
+  Box,
+  Checkbox,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { getCategories } from "../services/categoriesService";
 import _ from "lodash";
@@ -38,18 +47,18 @@ function FilterBox({
     });
     // an to all einai checked emfanise ta ola!!!
     console.log("Checked array:", checkedArray);
+    // if (checkedArray.length === 0) {
+    //   // kane check to all!!
+    //   let defaultValue = categories.map((cat) => {
+    //     if (cat.id === "all") {
+    //       cat.checked = true;
+    //     }
+    //     return cat;
+    //   });
+    //   setCategories([...defaultValue]);
+    // }
     if (checkedArray.length === 0) {
-      // kane check to all!!
-      let defaultValue = categories.map((cat) => {
-        if (cat.id === "all") {
-          cat.checked = true;
-        }
-        return cat;
-      });
-      setCategories([...defaultValue]);
-    }
-    if (checkedArray.includes("all")) {
-      console.log("Ta companies!!", initialList);
+      // console.log("Ta companies!!", initialList);
       setFilterList([...initialList]);
       return;
     }
@@ -85,6 +94,17 @@ function FilterBox({
     [classes.mobile]: mobile === true,
     [classes.default]: !mobile,
   });
+
+  const checkBoxOnChange = (e, category) => {
+    let filterObj = categories.map((cat) => {
+      if (cat.id === category.id) {
+        cat.checked = e.target.checked;
+      }
+      return cat;
+    });
+    setCategories([...filterObj]);
+  };
+
   return (
     <Box className={filterStyles}>
       {/* <div style={{ flex: 1 }}></div> */}
@@ -95,15 +115,38 @@ function FilterBox({
             flexDirection="column"
             style={{
               minWidth: "200px",
-              maxWidth: "200px",
-              overflow: "scroll",
+              //maxWidth: "200px",
+              //overflow: "scroll",
               minHeight: "400px",
               maxHeight: "400px",
-              padding: "20px",
+              // padding: "20px",
             }}
           >
-            <Typography style={{ alignSelf: "center" }}>Categories</Typography>
-            {categories?.map((category) => (
+            <Typography style={{ alignSelf: "center", padding: "20px" }}>
+              <b>Κατηγορίες</b>
+            </Typography>
+            <List
+              style={{
+                maxWidth: "100%",
+                overflow: "auto",
+              }}
+            >
+              {categories?.map((category) => (
+                <ListItem key={category.id} role={undefined} dense button>
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      disableRipple
+                      color="primary"
+                      checked={category.checked}
+                      onChange={(e) => checkBoxOnChange(e, category)}
+                    />
+                  </ListItemIcon>
+                  <ListItemText>{category?.name}</ListItemText>
+                </ListItem>
+              ))}
+            </List>
+            {/* {categories?.map((category) => (
               <Box
                 key={category.id}
                 display="flex"
@@ -114,20 +157,10 @@ function FilterBox({
                 <Typography variant="subtitle1">{category.name}</Typography>
                 <Checkbox
                   color="primary"
-                  checked={category.checked}
-                  onChange={(e) => {
-                    // find the with the id!!!
-                    let filterObj = categories.map((cat) => {
-                      if (cat.id === category.id) {
-                        cat.checked = e.target.checked;
-                      }
-                      return cat;
-                    });
-                    setCategories([...filterObj]);
-                  }}
+                  
                 />
               </Box>
-            ))}
+            ))} */}
           </Box>
         </Paper>
       </div>

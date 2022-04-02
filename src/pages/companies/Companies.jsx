@@ -59,11 +59,11 @@ function Companies() {
   const [companiesFilter, setCompaniesFilter] = useState([]);
   const [openFilterModal, setOpenFilterModal] = useState(false);
   const [categories, setCategories] = useState([
-    {
-      id: "all",
-      name: "All",
-      checked: true,
-    },
+    // {
+    //   id: "all",
+    //   name: "All",
+    //   checked: true,
+    // },
   ]);
   const itemPerPage = 3;
   const [page, setPage] = useState(1);
@@ -75,18 +75,27 @@ function Companies() {
         let categoryWithChecked = data.map((model) => {
           return { ...model, checked: false };
         });
-        let allValue = {
-          id: "all",
-          name: "All",
-          checked: true,
-        };
-        setCategories([allValue, ...categoryWithChecked]);
+        // let allValue = {
+        //   id: "all",
+        //   name: "All",
+        //   checked: true,
+        // };
+        setCategories(categoryWithChecked);
       } catch (ex) {}
     };
     Init();
   }, []);
 
   const handleChange = (event, value) => setPage(value);
+
+  const getCompanyCategory = (company) => {
+    if (company?.categoryId === null) {
+      return "Καμία";
+    } else {
+      var category = categories.find((c) => c.id === company.categoryId);
+      return category.name;
+    }
+  };
 
   const listBody = (company) => {
     return (
@@ -103,6 +112,7 @@ function Companies() {
           companySalesCount={company.companySalesCount}
           companyUsersCount={company.companyUsersCount}
           companyStoresCount={company.companyStoresCount}
+          category={getCompanyCategory(company)}
         />
       </ListItem>
     );

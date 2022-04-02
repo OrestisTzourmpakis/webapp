@@ -6,6 +6,7 @@ import {
   Paper,
   Button,
   Avatar,
+  Box,
 } from "@material-ui/core";
 import { ArrowForward, Business, Visibility } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
@@ -43,27 +44,42 @@ function SaleCardItem({
   allSales,
   dateStart,
   imgSrc,
+  category,
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
   return (
     <>
       <Paper className={classes.paperWrapper}>
-      
         <Grid container className={classes.cardWrapper}>
-          
-        {imgSrc ? (
-        <Grid
-            item
-            container
-            alignItems="center"
-            justifyContent="center"
-            xs={2}
-          >
-            <img src={imgSrc} style={{ width: "100%" }} />
-          </Grid>
-        ) :""
-        }
+          {imgSrc ? (
+            <Grid
+              item
+              container
+              alignItems="center"
+              justifyContent="center"
+              xs={2}
+            >
+              <img src={imgSrc} style={{ width: "100%" }} />
+            </Grid>
+          ) : (
+            <Grid
+              item
+              container
+              alignItems="center"
+              justifyContent="center"
+              xs={2}
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                style={{ width: "100%" }}
+              >
+                {/* <Avatar fontSize="large" /> */}
+              </Box>
+            </Grid>
+          )}
           <Grid
             item
             container
@@ -71,25 +87,32 @@ function SaleCardItem({
             justifyContent="center"
             xs={7}
             style={{ textOverflow: "ellipsis", overflow: "hidden" }}
-
-
           >
-            <div style={{ textOverflow: "ellipsis", overflow: "hidden",padding:"5px" }}>
-            {allSales && (
-            <Grid item xs={12} justifyContent="center" alignItems="center">
-              <Button
-                size="small"
-                variant="outlined"
-                color="primary"
-                startIcon={<Business />}
-                onClick={() => navigate(`/companies/${company.id}`)}
-              >
-                <Typography className={classes.companyName} variant="subtitle2">
-                  {company?.name}
-                </Typography>
-              </Button>
-            </Grid>
-          )}
+            <div
+              style={{
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                padding: "5px",
+              }}
+            >
+              {allSales && (
+                <Grid item xs={12} justifyContent="center" alignItems="center">
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<Business />}
+                    onClick={() => navigate(`/companies/${company.id}`)}
+                  >
+                    <Typography
+                      className={classes.companyName}
+                      variant="subtitle2"
+                    >
+                      {company?.name}
+                    </Typography>
+                  </Button>
+                </Grid>
+              )}
               <Typography
                 variant="h6"
                 style={{ textOverflow: "ellipsis", overflow: "hidden" }}
@@ -113,14 +136,17 @@ function SaleCardItem({
             justifyContent="center"
             xs={3}
           >
-            <div style={{textAlign:"center",margin:"auto"}}>
-            
-            <Typography variant="h6" className={classes.textFont}>
-            Διάρκεια:
-            </Typography>
-            <Typography variant="body1" className={classes.textFont}>
-              {dateConfiguration(dateStart)} - {dateConfiguration(dateEnd)}
-            </Typography>
+            <div style={{ textAlign: "center", margin: "auto" }}>
+              <Typography variant="body1" className={classes.textFont}>
+                <b>Κατηγορία: </b>
+                {category}
+              </Typography>
+              <Typography variant="h6" className={classes.textFont}>
+                Διάρκεια:
+              </Typography>
+              <Typography variant="body1" className={classes.textFont}>
+                {dateConfiguration(dateStart)} - {dateConfiguration(dateEnd)}
+              </Typography>
             </div>
           </Grid>
 

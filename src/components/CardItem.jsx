@@ -55,12 +55,22 @@ function CardItem({
   companySalesCount,
   companyUsersCount,
   companyStoresCount,
+  category,
 }) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   return (
     <Card className={classes.root}>
-      <CardHeader avatar={<Avatar src={logo} />} title={name}></CardHeader>
+      <CardHeader
+        avatar={<Avatar src={logo} />}
+        title={name}
+        action={
+          <Typography>
+            <b>Κατηγορία: </b>
+            {category}
+          </Typography>
+        }
+      ></CardHeader>
       <CardContent className={classes.cardContent}>
         <Grid container>
           <Grid item xs={6}>

@@ -46,11 +46,11 @@ function Offers() {
   const [offersFilter, setOffersFilter] = useState([]);
   const [openFilterModal, setOpenFilterModal] = useState(false);
   const [categories, setCategories] = useState([
-    {
-      id: "all",
-      name: "All",
-      checked: true,
-    },
+    // {
+    //   id: "all",
+    //   name: "All",
+    //   checked: true,
+    // },
   ]);
   const classes = useStyles();
   const navigate = useNavigate();
@@ -69,12 +69,12 @@ function Offers() {
         let categoryWithChecked = data.map((model) => {
           return { ...model, checked: false };
         });
-        let allValue = {
-          id: "all",
-          name: "All",
-          checked: true,
-        };
-        setCategories([allValue, ...categoryWithChecked]);
+        // let allValue = {
+        //   id: "all",
+        //   name: "All",
+        //   checked: true,
+        // };
+        setCategories(categoryWithChecked);
       } catch (ex) {}
     };
     Init();
@@ -94,6 +94,16 @@ function Offers() {
   const handleCloseDialog = () => {
     setDialogConfig({ ...dialogConfig, open: false });
   };
+
+  const getSaleCompanyCategory = (sale) => {
+    if (sale?.company?.categoryId === null) {
+      return "Καμία";
+    } else {
+      var category = categories.find((c) => c.id === sale?.company.categoryId);
+      return category.name;
+    }
+  };
+
   const listBody = (sale) => {
     return (
       <ListItem
@@ -117,6 +127,7 @@ function Offers() {
           imgSrc={sale.image}
           company={sale.company}
           dateStart={sale.dateStart}
+          category={getSaleCompanyCategory(sale)}
         />
       </ListItem>
     );
